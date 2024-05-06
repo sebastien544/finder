@@ -156,7 +156,7 @@ searchBarMain?.addEventListener("keydown", (e) => {
 
 document.getElementById("search-btn").addEventListener('click', () => {
   const query = document.getElementById("search-bar-main").value.trim()
-  window.location.href = `http://127.0.0.1:5500/search-result.html?query=${query}&page=1`;
+  window.location.href = `http://ordotype.webflow.io/search-result?query=${query}&page=1`;
 })
 
 function keyDownEvent(e) {
@@ -181,7 +181,7 @@ function keyDownEvent(e) {
       if (x) x[currentFocus].click();
     } else {
         const query = document.getElementById("search-bar-main").value.trim()
-        window.location.href = `https://ordotype.webflow.io/search-result.html?query=${query}&page=1`;
+        window.location.href = `https://ordotype.webflow.io/search-result?query=${query}&page=1`;
     }
   }
 }
