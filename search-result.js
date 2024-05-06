@@ -134,7 +134,7 @@ function displayPagination(totalResults, query){
   }
 }
 
-window.addEventListener("load", async function(){
+document.addEventListener("DOMContentLoaded", async function(){
     let results = await searchAll(query, page);
     const baseUrl = window.location.origin.includes('webflow.io') 
     ? 'https://ordotype.webflow.io' 
