@@ -63,7 +63,7 @@ function displayPagination(totalResults, query){
     for (let index = 1; index <= totalPages; index++) {
       let link  = document.createElement('a')
       link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600;'
-      link.setAttribute('href', `http://ordotype.webflow.io/search-result.html?query=${query}&page=${index}`);
+      link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${index}`);
       let number = document.createTextNode(index);
       link.appendChild(number);
       paginationDiv.appendChild(link);
@@ -127,7 +127,7 @@ function displayPagination(totalResults, query){
             break;
         }
 
-        link.setAttribute('href', `http://ordotype.webflow.io/search-result.html?query=${query}&page=${href}`);
+        link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${href}`);
         link.appendChild(number);
         paginationDiv.appendChild(link);
     }
