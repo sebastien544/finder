@@ -40,6 +40,8 @@ async function searchAll(query, page) {
         }
       );
 
+        
+      document.getElementById('search-title').innerText = `${response.data.hits.total.value} Résultats pour "${query}"`;
       displayPagination(response.data.hits.total.value, query);
   
       return response.data.hits.hits.map((hit) => ({
