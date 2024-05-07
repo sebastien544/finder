@@ -97,11 +97,12 @@ function displayPagination(totalResults, query){
             if (page > 4) {
               number = document.createTextNode(page);
               href = page;
-              link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             } 
+            if (page > 4 && (page <= totalPages - 3)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             if ( page > totalPages - 3 ){ 
               number = document.createTextNode(totalPages - 3);
               href = totalPages - 3;
+              if(page == (totalPages - 3)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             }
             break;
           case 5: 
@@ -112,12 +113,14 @@ function displayPagination(totalResults, query){
             if ( page > totalPages - 3 ){ 
               number = document.createTextNode(totalPages - 2);
               href = totalPages - 2;
+              if(page == (totalPages - 2)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             }
             break;
           case 6:
             if ( page > totalPages - 3 ){
               number = document.createTextNode(totalPages - 1);
               href = totalPages - 1;
+              if(page == (totalPages - 1)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             } else {
               number = document.createTextNode('...');
             }
@@ -125,6 +128,7 @@ function displayPagination(totalResults, query){
           case 7:
             number = document.createTextNode(totalPages);
             href = totalPages;
+            if(page == totalPages) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             break;
           default:
             break;
