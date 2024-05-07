@@ -59,13 +59,14 @@ async function searchAll(query, page) {
 function displayPagination(totalResults, query){
   const totalPages = Math.ceil(totalResults / 10);
   const paginationDiv = document.getElementById('pagination');
-  paginationDiv.style.cssText = "display: flex; justify-content: center;"
+  paginationDiv.style.cssText = "display: flex; justify-content: center; grid-column-gap: .5rem; align-items: center;"
 
   if (totalPages <= 7) {
     for (let index = 1; index <= totalPages; index++) {
       let link  = document.createElement('a')
-      link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600;'
-      link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${index}`);
+      link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600; color: #0c0e16;'
+      if (index == page) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
+      link.setAttribute('href', `http://ordotype.webflow.io/search-result.html?query=${query}&page=${index}`);
       let number = document.createTextNode(index);
       link.appendChild(number);
       paginationDiv.appendChild(link);
@@ -73,9 +74,8 @@ function displayPagination(totalResults, query){
   } else {
     for (let index = 1; index < 8; index++) {
         let link  = document.createElement('a')
-        link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600;'
-        link.style.color = index == page ? 'ffffffe6' : '#0c0e16';
-        //link.style.backgroundColor = page > 4  ? '#3454f6' : 'none';
+        link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600; color: #0c0e16;'
+        if (page <= 4 && index == page) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
       
         let number = document.createTextNode(index);
         let href = index;
@@ -97,6 +97,7 @@ function displayPagination(totalResults, query){
             if (page > 4) {
               number = document.createTextNode(page);
               href = page;
+              link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
             } 
             if ( page > totalPages - 3 ){ 
               number = document.createTextNode(totalPages - 3);
@@ -129,7 +130,7 @@ function displayPagination(totalResults, query){
             break;
         }
 
-        link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${href}`);
+        link.setAttribute('href', `http://ordotype.webflow.io/search-result.html?query=${query}&page=${href}`);
         link.appendChild(number);
         paginationDiv.appendChild(link);
     }
