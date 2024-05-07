@@ -151,7 +151,6 @@ document.addEventListener("DOMContentLoaded", async function(){
         const img = document.createElement("img");
         img.style.width = "16px";
         img.style.height = "16px";
-        img.style.marginLeft = "5px";  // Add some space between the image and the text
     
         resultElement.classList.add("search-result");
         const div =  document.createElement('div');
@@ -159,8 +158,12 @@ document.addEventListener("DOMContentLoaded", async function(){
         // Check the gratos value and set the image source or make it invisible
         if (result.gratos == "FALSE") {
             img.setAttribute("src", result.Img);
-            div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 2px 8px; font-size:14px; border-radius: 4px;";
-            window.matchMedia("(min-width: 480px)").matches && div.appendChild(document.createTextNode('Ordotype plus'));
+            div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; font-size:14px; border-radius: 4px;";
+            if (window.matchMedia("(min-width: 480px)").matches){
+                div.appendChild(document.createTextNode('Ordotype plus'));
+                img.style.marginLeft = "5px";  // Add some space between the image and the text
+                div.style.padding = "2px 8px";
+            } 
             div.appendChild(img);
         } else {
             img.setAttribute("src", "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
