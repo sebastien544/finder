@@ -66,7 +66,7 @@ function displayPagination(totalResults, query){
       let link  = document.createElement('a')
       link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600; color: #0c0e16;'
       if (index == page) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-      link.setAttribute('href', `http://ordotype.webflow.io/search-result.html?query=${query}&page=${index}`);
+      link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${index}`);
       let number = document.createTextNode(index);
       link.appendChild(number);
       paginationDiv.appendChild(link);
@@ -130,7 +130,7 @@ function displayPagination(totalResults, query){
             break;
         }
 
-        link.setAttribute('href', `http://ordotype.webflow.io/search-result.html?query=${query}&page=${href}`);
+        link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${href}`);
         link.appendChild(number);
         paginationDiv.appendChild(link);
     }
