@@ -149,8 +149,8 @@ document.addEventListener("DOMContentLoaded", async function(){
         const resultElement = document.createElement("a");
     
         const img = document.createElement("img");
-        img.style.width = "30px";
-        img.style.height = "30px";
+        img.style.width = "16px";
+        img.style.height = "16px";
         img.style.marginLeft = "5px";  // Add some space between the image and the text
     
         resultElement.classList.add("search-result");
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         // Check the gratos value and set the image source or make it invisible
         if (result.gratos == "FALSE") {
             img.setAttribute("src", result.Img);
-            div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 2px 8px;";
+            div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 2px 8px; font-size:14px; border-radius: 4px;";
             window.matchMedia("(min-width: 480px)").matches && div.appendChild(document.createTextNode('Ordotype plus'));
             div.appendChild(img);
         } else {
