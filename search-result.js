@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         if (result.gratos == "FALSE") {
             img.setAttribute("src", result.Img);
             div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 2px 8px;";
-            div.appendChild(document.createTextNode('Ordotype plus'));
+            window.matchMedia("(min-width: 480px)").matches && div.appendChild(document.createTextNode('Ordotype plus'));
             div.appendChild(img);
         } else {
             img.setAttribute("src", "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
