@@ -138,6 +138,9 @@ function displayPagination(totalResults, query){
 
 document.addEventListener("DOMContentLoaded", async function(){
     let results = await searchAll(query, page);
+    if (results.length == 0) {
+      results = await suggest(query);
+    }
     const baseUrl = window.location.origin.includes('webflow.io') 
     ? 'https://ordotype.webflow.io' 
     : 'https://www.ordotype.fr';
