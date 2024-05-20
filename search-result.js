@@ -37,7 +37,8 @@ async function searchAll(query, page) {
           },
         }
       );
-
+        
+      document.getElementById('search-title').innerText = `${response.data.hits.total.value} Résultats pour "${query}"`;
       displayPagination(response.data.hits.total.value, query);
   
       return response.data.hits.hits.map((hit) => ({
@@ -140,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     let results = await searchAll(query, page);
     if (results.length == 0) {
       results = await suggest(query);
-      document.getElementById('suggestions').innerText('Voici quelques suggestions');
+      document.getElementById('suggestions').innerText = 'Voici quelques suggestions';
     }
     const baseUrl = window.location.origin.includes('webflow.io') 
     ? 'https://ordotype.webflow.io' 
@@ -167,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         div.appendChild(img);
     
         resultElement.style.cssText =
-            "text-decoration: none; color: #0C0E16; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between";
+           "text-decoration: none; color: #0C0E1699; font-size: 16px; padding: 16px 8px; display: flex; align-items: center; justify-content:space-between";
     
         resultElement.addEventListener("click", function(event) {
             event.preventDefault();
