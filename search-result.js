@@ -5,7 +5,7 @@ const page = params.get("page")
 async function searchAll(query, page) {
     try {
       const response = await axios.post(
-        `${ES_URL}/_search`,
+        "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-test/_search",
         {
           query: {
             query_string: {
