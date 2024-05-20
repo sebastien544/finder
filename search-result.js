@@ -1,6 +1,9 @@
 var params = new URLSearchParams(location.search);
 const query = params.get("query")
 const page = params.get("page")
+const baseUrl = window.location.origin.includes('webflow.io') 
+    ? 'https://ordotype.webflow.io' 
+    : 'https://www.ordotype.fr';
 
 async function searchAll(query, page) {
     try {
@@ -130,7 +133,7 @@ function displayPagination(totalResults, query){
             break;
         }
 
-        link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${href}`);
+        link.setAttribute('href', `${baseUrl}/search-result?query=${query}&page=${href}`);
         link.appendChild(number);
         paginationDiv.appendChild(link);
     }
@@ -143,9 +146,6 @@ document.addEventListener("DOMContentLoaded", async function(){
       results = await suggest(query);
       document.getElementById('suggestions').innerText = 'Voici quelques suggestions';
     }
-    const baseUrl = window.location.origin.includes('webflow.io') 
-    ? 'https://ordotype.webflow.io' 
-    : 'https://www.ordotype.fr';
     let resultList = document.getElementById("search-result-wraper");
     results.forEach((result, index) => {
         const resultElement = document.createElement("a");
