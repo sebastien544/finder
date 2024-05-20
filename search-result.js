@@ -6,7 +6,6 @@ async function searchAll(query, page) {
     try {
       const response = await axios.post(
         `${ES_URL}/_search`,
-      // "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-2023-12-21c/_search",
         {
           query: {
             query_string: {
@@ -28,8 +27,7 @@ async function searchAll(query, page) {
             { Alias: { order: "desc", missing: "_last" } },
             { "Ordonnances médicales": { order: "desc", missing: "_last" } },
             { "Conseils patient": { order: "desc", missing: "_last" } },
-          ],
-        //   track_total_hits: true
+          ]
         },
         {
           headers: {
@@ -40,16 +38,13 @@ async function searchAll(query, page) {
         }
       );
 
-        
-      document.getElementById('search-title').innerText = `${response.data.hits.total.value} Résultats pour "${query}"`;
       displayPagination(response.data.hits.total.value, query);
   
       return response.data.hits.hits.map((hit) => ({
         Name: hit._source.Name,
         Slug: hit._source.Slug,
-        // url: hit._source.url,
-        gratos: hit._source.gratos,
         Img: hit._source.Logo_for_finder_URL,
+        wordingLogo: hit._source.Wording_Logo
       }));
     } catch (error) {
       console.error(error);
@@ -145,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     let results = await searchAll(query, page);
     if (results.length == 0) {
       results = await suggest(query);
-      document.getElementById('suggestions').innerText = 'Voici quelques suggestions';
+      document.getElementById('suggestions').innerText('Voici quelques suggestions');
     }
     const baseUrl = window.location.origin.includes('webflow.io') 
     ? 'https://ordotype.webflow.io' 
@@ -162,22 +157,17 @@ document.addEventListener("DOMContentLoaded", async function(){
         const div =  document.createElement('div');
     
         // Check the gratos value and set the image source or make it invisible
-        if (result.gratos == "FALSE") {
-            img.setAttribute("src", result.Img);
-            div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; font-size:14px; border-radius: 4px;";
-            if (window.matchMedia("(min-width: 480px)").matches){
-                div.appendChild(document.createTextNode('Ordotype plus'));
-                img.style.marginLeft = "5px";  // Add some space between the image and the text
-                div.style.padding = "2px 8px";
-            } 
-            div.appendChild(img);
-        } else {
-            img.setAttribute("src", "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-            img.style.opacity = "1"; // Maintain the opacity so the space is preserved
-        }
+        img.setAttribute("src", result.Img);
+        div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; color: #0c0e16b3; font-size: 14px;border-radius:4px;";
+        if (window.matchMedia("(min-width: 480px)").matches){
+          div.appendChild(document.createTextNode(result.wordingLogo));
+          img.style.marginLeft = "5px";  // Add some space between the image and the text
+          div.style.padding = "2px 8px";
+        } 
+        div.appendChild(img);
     
         resultElement.style.cssText =
-            "text-decoration: none; color: #0C0E1699; font-size: 16px; padding: 16px 8px; display: flex; align-items: center; justify-content:space-between";
+            "text-decoration: none; color: #0C0E16; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between";
     
         resultElement.addEventListener("click", function(event) {
             event.preventDefault();
@@ -196,7 +186,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     
         // Append elements to the resultElement
         resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
-        result.gratos == "FALSE" ? resultElement.appendChild(div) : resultElement.appendChild(img);  // Add img element
+        resultElement.appendChild(div)
     
         resultList.appendChild(resultElement);
     });
