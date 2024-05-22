@@ -208,7 +208,7 @@ async function search(query) {
   try {
     const response = await axios.post(
       //`${ES_URL}/_search`,
-    "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-production-2024-03-06/_search",
+    "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-20/_search",
       {
         query: {
           query_string: {
@@ -256,7 +256,7 @@ async function suggest(query) {
   try {
     const response = await axios.post(
       //`${ES_URL}/_search`,
-      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-production-2024-03-06/_search",
+      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-20/_search",
       {
         suggest: {
           suggestion: {
