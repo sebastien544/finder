@@ -19,6 +19,7 @@
 //     ? `${ES_BASE_URL_STAGING}${ES_INDEX}`
 //     : `${ES_BASE_URL_PRODUCTION}${ES_INDEX}`;
 
+ES_URL = "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-production-2024-03-06";
 
 var currentFocus;
 
@@ -326,22 +327,23 @@ function displayResults(results, input) {
     const resultElement = document.createElement("a");
 
     const img = document.createElement("img");
-    img.style.width = "30px";
-    img.style.height = "30px";
-    img.style.marginRight = "10px";  // Add some space between the image and the text
+    img.style.width = "16px";
+    img.style.height = "16px";
 
     resultElement.classList.add("search-result");
-
-    // Check the gratos value and set the image source or make it invisible
-    if (result.gratos == "FALSE") {
-        img.setAttribute("src", result.Img);
-    } else {
-        img.setAttribute("src", "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-        img.style.opacity = "1"; // Maintain the opacity so the space is preserved
-    }
-
+    const div =  document.createElement('div');
+    
+    img.setAttribute("src", result.Img);
+    div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; color: #0c0e16b3; font-size: 14px;border-radius:4px;";
+    if (window.matchMedia("(min-width: 480px)").matches){
+      div.appendChild(document.createTextNode(result.wordingLogo));
+      img.style.marginLeft = "5px";  // Add some space between the image and the text
+      div.style.padding = "2px 8px";
+    } 
+    div.appendChild(img);
+    
     resultElement.style.cssText =
-        "text-decoration: none; color: #0C0E16; padding: 8px 8px; display: flex; align-items: center;";
+            "text-decoration: none; color: #0C0E16; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between";
 
     resultElement.addEventListener("click", function(event) {
         event.preventDefault();
@@ -359,8 +361,8 @@ function displayResults(results, input) {
     };
 
     // Append elements to the resultElement
-    resultElement.appendChild(img);  // Add img element
     resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
+    resultElement.appendChild(div);  // Add img element
 
     resultList.appendChild(resultElement);
 });
