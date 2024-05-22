@@ -332,9 +332,10 @@ function displayResults(results, input) {
     const div =  document.createElement('div');
     
     img.setAttribute("src", result.Img);
-    div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; color: #0c0e16b3; font-size: 14px;border-radius:4px;";
-    if (window.matchMedia("(min-width: 480px)").matches){
-      if(input.id != "search-bar-nav") div.appendChild(document.createTextNode(result.wordingLogo));
+    div.style.cssText = "display: flex; align-items: center; padding: 4px; color: #0c0e16b3; font-size: 14px;border-radius:4px;";
+    if (window.matchMedia("(min-width: 480px)").matches && input.id != "search-bar-nav"){
+      div.style.backgroundColor = "#0c0e160d";
+      div.appendChild(document.createTextNode(result.wordingLogo));
       img.style.marginLeft = "5px";  // Add some space between the image and the text
       div.style.padding = "2px 8px";
     } 
