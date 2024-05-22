@@ -19,8 +19,6 @@
 //     ? `${ES_BASE_URL_STAGING}${ES_INDEX}`
 //     : `${ES_BASE_URL_PRODUCTION}${ES_INDEX}`;
 
-ES_URL = "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-production-2024-03-06";
-
 var currentFocus;
 
 // Handle click outside of search results
@@ -209,8 +207,8 @@ function removeActive(x) {
 async function search(query) {
   try {
     const response = await axios.post(
-      `${ES_URL}/_search`,
-    // "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-2023-12-21c/_search",
+      //`${ES_URL}/_search`,
+    "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-production-2024-03-06/_search",
       {
         query: {
           query_string: {
@@ -257,7 +255,8 @@ async function search(query) {
 async function suggest(query) {
   try {
     const response = await axios.post(
-      `${ES_URL}/_search`,
+      //`${ES_URL}/_search`,
+      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-production-2024-03-06/_search",
       {
         suggest: {
           suggestion: {
