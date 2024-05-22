@@ -19,6 +19,10 @@
 //     ? `${ES_BASE_URL_STAGING}${ES_INDEX}`
 //     : `${ES_BASE_URL_PRODUCTION}${ES_INDEX}`;
 
+const baseUrl = window.location.origin.includes('webflow.io') 
+? 'https://ordotype.webflow.io' 
+: 'https://www.ordotype.fr';
+
 var currentFocus;
 
 // Handle click outside of search results
@@ -155,7 +159,7 @@ searchBarMain?.addEventListener("keydown", (e) => {
 
 document.getElementById("search-btn").addEventListener('click', () => {
   const query = document.getElementById("search-bar-main").value.trim()
-  window.location.href = `http://ordotype.webflow.io/search-result?query=${query}&page=1`;
+  window.location.href = `${baseUrl}/search-result?query=${query}&page=1`;
 })
 
 function keyDownEvent(e) {
@@ -180,7 +184,7 @@ function keyDownEvent(e) {
       if (x) x[currentFocus].click();
     } else {
         const query = document.getElementById("search-bar-main").value.trim()
-        window.location.href = `https://ordotype.webflow.io/search-result?query=${query}&page=1`;
+        window.location.href = `${baseUrl}/search-result?query=${query}&page=1`;
     }
   }
 }
@@ -291,10 +295,6 @@ async function suggest(query) {
 
 // Display the search results
 function displayResults(results, input) {
-  const baseUrl = window.location.origin.includes('webflow.io') 
-  ? 'https://ordotype.webflow.io' 
-  : 'https://www.ordotype.fr';
-
   let resultList = document.getElementById("search-results");
 
   if (!resultList) {
@@ -334,7 +334,7 @@ function displayResults(results, input) {
     img.setAttribute("src", result.Img);
     div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; color: #0c0e16b3; font-size: 14px;border-radius:4px;";
     if (window.matchMedia("(min-width: 480px)").matches){
-      div.appendChild(document.createTextNode(result.wordingLogo));
+      if(input.id == "search-bar-nav") div.appendChild(document.createTextNode(result.wordingLogo));
       img.style.marginLeft = "5px";  // Add some space between the image and the text
       div.style.padding = "2px 8px";
     } 
