@@ -243,8 +243,7 @@ async function search(query) {
     return response.data.hits.hits.map((hit) => ({
       Name: hit._source.Name,
       Slug: hit._source.Slug,
-      // url: hit._source.url,
-      gratos: hit._source.gratos,
+      wordingLogo: hit._source.Wording_Logo,
       Img: hit._source.Logo_for_finder_URL,
     }));
   } catch (error) {
@@ -282,7 +281,7 @@ async function suggest(query) {
     return response.data.suggest.suggestion[0].options.map((option) => ({
       Name: option._source.Name,
       Slug: option._source.Slug,
-      gratos: option._source.gratos,
+      wordingLogo: hit._source.Wording_Logo,
       Img: option._source.Logo_for_finder_URL,
     }));
   } catch (error) {
