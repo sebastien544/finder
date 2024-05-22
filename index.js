@@ -342,7 +342,7 @@ function displayResults(results, input) {
     div.appendChild(img);
     
     resultElement.style.cssText =
-            "text-decoration: none; color: #0C0E16; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between";
+            "text-decoration: none; color: #0C0E1699; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between";
 
     resultElement.addEventListener("click", function(event) {
         event.preventDefault();
