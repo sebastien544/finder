@@ -32,7 +32,6 @@ document.getElementById("search-btn").addEventListener('click', () => {
 
 async function inputEvent(input, e) {
   // currentFocus = -1;
-  resultList.innerHTML = '';
   query = input.value.trim();
   // if (query) {
   //   let results = await search(query);
@@ -269,7 +268,8 @@ async function displayAll(){
       // Append elements to the resultElement
       resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
       resultElement.appendChild(div)
-  
+
+      resultList.innerHTML = '';
       resultList.appendChild(resultElement);
   });
 }
