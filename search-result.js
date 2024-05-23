@@ -1,5 +1,5 @@
 var params = new URLSearchParams(location.search);
-const query = params.get("query")
+let query = params.get("query")
 const page = params.get("page")
 const baseUrl = window.location.origin.includes('webflow.io') 
   ? 'https://ordotype.webflow.io' 
@@ -29,30 +29,30 @@ document.getElementById("search-btn").addEventListener('click', () => {
 })
 
 async function inputEvent(input, e) {
-  currentFocus = -1;
+  // currentFocus = -1;
 
-  const query = input.value.trim();
-  if (query) {
-    let results = await search(query);
-    if (results.length == 0) {
-      results = await suggest(query);
-    }
-    if (results.length == 0) {
-      document.getElementById("search-results").innerHTML =
-        "Cette situation clinique n'est pas encore disponible";
-      if (e.inputType != "deleteContentBackward" && query.length > 3) {
-        updateQueryCount(query, false);
-      }
-      return true;
-    }
-    if (e.inputType != "deleteContentBackward" && query.length > 3) {
-      updateQueryCount(query);
-    }
-    // handleSendResultsToGA(input.id);
-    displayAll(results, input);
-  } else {
-    document.querySelector("#search-results")?.remove();
-  }
+  query = input.value.trim();
+  // if (query) {
+  //   let results = await search(query);
+  //   if (results.length == 0) {
+  //     results = await suggest(query);
+  //   }
+  //   if (results.length == 0) {
+  //     document.getElementById("search-results").innerHTML =
+  //       "Cette situation clinique n'est pas encore disponible";
+  //     if (e.inputType != "deleteContentBackward" && query.length > 3) {
+  //       updateQueryCount(query, false);
+  //     }
+  //     return true;
+  //   }
+  //   if (e.inputType != "deleteContentBackward" && query.length > 3) {
+  //     updateQueryCount(query);
+  //   }
+  //   // handleSendResultsToGA(input.id);
+  displayAll();
+  // } else {
+  //   document.querySelector("#search-results")?.remove();
+  // }
 }
 
 function keyDownEvent(e) {
