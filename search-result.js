@@ -119,8 +119,8 @@ async function searchAll(query, page) {
       );
         
       let searchTitle = document.getElementById('search-title')
-      searchTitle.innerText = '';
-      searchTitle.innerText = `${response.data.hits.total.value} Résultats pour "${query}"`;
+      searchTitle.innerHTML = '';
+      searchTitle.innerHTML = `${response.data.hits.total.value} Résultats pour "${query}"`;
       displayPagination(response.data.hits.total.value, query);
   
       return response.data.hits.hits.map((hit) => ({
