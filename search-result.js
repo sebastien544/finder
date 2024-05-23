@@ -49,7 +49,7 @@ async function inputEvent(input, e) {
       updateQueryCount(query);
     }
     // handleSendResultsToGA(input.id);
-    displayResults(results, input);
+    displayAll(results, input);
   } else {
     document.querySelector("#search-results")?.remove();
   }
