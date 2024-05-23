@@ -118,7 +118,9 @@ async function searchAll(query, page) {
         }
       );
         
-      document.getElementById('search-title').innerText = `${response.data.hits.total.value} Résultats pour "${query}"`;
+      let searchTitle = document.getElementById('search-title')
+      searchTitle.innerText = '';
+      searchTitle.innerText = `${response.data.hits.total.value} Résultats pour "${query}"`;
       displayPagination(response.data.hits.total.value, query);
   
       return response.data.hits.hits.map((hit) => ({
@@ -224,6 +226,7 @@ async function displayAll(){
     document.getElementById('suggestions').innerText = 'Voici quelques suggestions';
   }
   let resultList = document.getElementById("search-result-wraper");
+  resultList.innerHTML = '';
   results.forEach((result, index) => {
       const resultElement = document.createElement("a");
   
