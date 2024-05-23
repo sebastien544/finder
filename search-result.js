@@ -227,6 +227,7 @@ async function displayAll(){
     results = await suggest(query);
     document.getElementById('suggestions').innerText = 'Voici quelques suggestions';
   }
+  resultList.innerHTML = '';
   results.forEach((result, index) => {
       const resultElement = document.createElement("a");
   
@@ -269,7 +270,6 @@ async function displayAll(){
       resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
       resultElement.appendChild(div)
 
-      resultList.innerHTML = '';
       resultList.appendChild(resultElement);
   });
 }
