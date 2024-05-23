@@ -220,13 +220,13 @@ function displayPagination(totalResults, query){
 }
 
 async function displayAll(){
+  let resultList = document.getElementById("search-result-wraper");
+  resultList.innerHTML = '';
   let results = await searchAll(query, page);
   if (results.length == 0) {
     results = await suggest(query);
     document.getElementById('suggestions').innerText = 'Voici quelques suggestions';
   }
-  let resultList = document.getElementById("search-result-wraper");
-  resultList.innerHTML = '';
   results.forEach((result, index) => {
       const resultElement = document.createElement("a");
   
