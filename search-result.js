@@ -274,4 +274,4 @@ async function displayAll(){
   });
 }
 
-document.addEventListener("DOMContentLoaded", displayAll());
+query != null && document.addEventListener("DOMContentLoaded", displayAll);
