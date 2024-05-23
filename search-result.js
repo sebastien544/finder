@@ -5,6 +5,8 @@ const baseUrl = window.location.origin.includes('webflow.io')
   ? 'https://ordotype.webflow.io' 
   : 'https://www.ordotype.fr';
 
+let resultList = document.getElementById("search-result-wraper");
+
 const searchBarMain = document.getElementById("search-bar-main");
 
 searchBarMain?.addEventListener("input", async (event) => {
@@ -30,7 +32,7 @@ document.getElementById("search-btn").addEventListener('click', () => {
 
 async function inputEvent(input, e) {
   // currentFocus = -1;
-
+  resultList.innerHTML = '';
   query = input.value.trim();
   // if (query) {
   //   let results = await search(query);
@@ -221,8 +223,6 @@ function displayPagination(totalResults, query){
 }
 
 async function displayAll(){
-  let resultList = document.getElementById("search-result-wraper");
-  resultList.innerHTML = '';
   let results = await searchAll(query, page);
   if (results.length == 0) {
     results = await suggest(query);
