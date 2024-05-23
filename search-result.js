@@ -137,7 +137,7 @@ async function searchAll(query, page) {
 function displayPagination(totalResults, query){
   const totalPages = Math.ceil(totalResults / 10);
   const paginationDiv = document.getElementById('pagination');
-  paginationDiv.innetHTML = '';
+  paginationDiv.innerHTML = '';
   paginationDiv.style.cssText = "display: flex; justify-content: center; grid-column-gap: .5rem; align-items: center;"
 
   if (totalPages <= 7) {
