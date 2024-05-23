@@ -1,6 +1,6 @@
 var params = new URLSearchParams(location.search);
-let query = params.get("query")
-const page = params.get("page")
+let query = params.get("query");
+const page = params.get("page") ?? 1;
 const baseUrl = window.location.origin.includes('webflow.io') 
   ? 'https://ordotype.webflow.io' 
   : 'https://www.ordotype.fr';
