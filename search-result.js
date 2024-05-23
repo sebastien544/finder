@@ -86,7 +86,7 @@ function keyDownEvent(e) {
 async function searchAll(query, page) {
     try {
       const response = await axios.post(
-        "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-test/_search",
+        "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-23/_search",
         {
           query: {
             query_string: {
