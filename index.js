@@ -348,9 +348,8 @@ function displayResults(results, input) {
     if (window.matchMedia("(min-width: 480px)").matches && input.id != "search-bar-nav"){
       div.appendChild(document.createTextNode(result.wordingLogo));
       img.style.marginLeft = "5px";  // Add some space between the image and the text
-      
+      div.style.padding = "2px 8px";    
     } 
-    div.style.padding = "2px 8px";
     div.appendChild(img);
     
     resultElement.style.cssText =
