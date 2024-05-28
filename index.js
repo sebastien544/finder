@@ -372,7 +372,9 @@ function displayResults(results, input) {
     };
 
     // Append elements to the resultElement
-    resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
+    let resultName = document.createTextNode(result.Name);
+    resultName.style.fontSize = "14px";
+    resultElement.appendChild(resultName);  // Add text node after img
     resultElement.appendChild(div);  // Add img element
 
     resultList.appendChild(resultElement);
