@@ -301,15 +301,18 @@ function displayResults(results, input) {
     resultList = document.createElement("div");
     resultList.id = "search-results";
 
+    const inputRect = input.getBoundingClientRect();
+    
     if (window.matchMedia("(min-width: 480px)").matches){
     resultList.style.cssText =
       "box-shadow: 0 0 0 1px rgb(35 38 59 / 10%), 0 6px 16px -4px rgb(35 38 59 / 15%); border-radius: 4px; padding: 8px;background: #fff;";
+      resultList.style.width = `${inputRect.width}px`;
+      resultList.style.left = `${inputRect.left}px`;
+    }else {
+      resultList.style.width = `100%`;
     }
     resultList.style.position = (input.id == "search-bar-main" || input.id == "search-bar-hp") ? "absolute" : "fixed";
-
-    const inputRect = input.getBoundingClientRect();
-    resultList.style.width = `${inputRect.width}px`;
-    resultList.style.left = `${inputRect.left}px`;
+  
     resultList.style.top =
       (input.id == "search-bar-main" || input.id == "search-bar-hp") 
         ? `${inputRect.bottom + window.pageYOffset + 5}px`
