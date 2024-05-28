@@ -353,7 +353,7 @@ function displayResults(results, input) {
     div.appendChild(img);
     
     resultElement.style.cssText =
-            "text-decoration: none; color: #0C0E1699; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between";
+            "text-decoration: none; color: #0C0E1699; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between; font-size: 14px;";
 
     resultElement.addEventListener("click", function(event) {
         event.preventDefault();
@@ -371,11 +371,7 @@ function displayResults(results, input) {
     };
 
     // Append elements to the resultElement
-    let resultName = document.createTextNode(result.Name);
-    var spanElement = document.createElement('span');
-    spanElement.appendChild(resultName);
-    spanElement.style.fontSize = "14px";
-    resultElement.appendChild(resultName);  // Add text node after img
+    resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
     resultElement.appendChild(div);  // Add img element
 
     resultList.appendChild(resultElement);
