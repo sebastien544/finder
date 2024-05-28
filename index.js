@@ -342,8 +342,9 @@ function displayResults(results, input) {
       div.style.backgroundColor = "#0c0e160d";
       div.appendChild(document.createTextNode(result.wordingLogo));
       img.style.marginLeft = "5px";  // Add some space between the image and the text
-      div.style.padding = "2px 8px";
+      
     } 
+    div.style.padding = "2px 8px";
     div.appendChild(img);
     
     resultElement.style.cssText =
