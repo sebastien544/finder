@@ -327,8 +327,8 @@ function displayResults(results, input) {
   resultList.innerHTML = "";
   
   const query = document.getElementById("search-bar-main").value.trim()
-  let text = document.createTextNode('h3');
-  text.innerText = `Chercher "${query}" sur Ordotype`;
+  let text = document.createElement('h3');
+  text.textContent = `Chercher "${query}" sur Ordotype`;
   resultList.appendChild(text);
   
   results.forEach((result, index) => {
