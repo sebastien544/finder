@@ -373,7 +373,9 @@ function displayResults(results, input) {
 
     // Append elements to the resultElement
     let resultName = document.createTextNode(result.Name);
-    resultName.style.fontSize = "14px";
+    var spanElement = document.createElement('span');
+    spanElement.appendChild(resultName);
+    spanElement.style.fontSize = "14px";
     resultElement.appendChild(resultName);  // Add text node after img
     resultElement.appendChild(div);  // Add img element
 
