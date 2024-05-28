@@ -212,7 +212,7 @@ async function search(query) {
   try {
     const response = await axios.post(
       //`${ES_URL}/_search`,
-    "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-20/_search",
+    "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-23/_search",
       {
         query: {
           query_string: {
@@ -259,7 +259,7 @@ async function suggest(query) {
   try {
     const response = await axios.post(
       //`${ES_URL}/_search`,
-      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-20/_search",
+      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-23/_search",
       {
         suggest: {
           suggestion: {
@@ -301,8 +301,10 @@ function displayResults(results, input) {
     resultList = document.createElement("div");
     resultList.id = "search-results";
 
+    if (window.matchMedia("(min-width: 480px)").matches){
     resultList.style.cssText =
       "box-shadow: 0 0 0 1px rgb(35 38 59 / 10%), 0 6px 16px -4px rgb(35 38 59 / 15%); border-radius: 4px; padding: 8px;background: #fff;";
+    }
     resultList.style.position = (input.id == "search-bar-main" || input.id == "search-bar-hp") ? "absolute" : "fixed";
 
     const inputRect = input.getBoundingClientRect();
