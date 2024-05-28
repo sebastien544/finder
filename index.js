@@ -91,7 +91,7 @@ async function inputEvent(input, e) {
     }
     if (results.length == 0) {
       let searchResults = document.getElementById("search-results");
-      searchResults.style.background = "linear-gradient(to right, #000000, #1B1B1B);"
+      searchResults.style.background = "#dbdeed"
       searchResults.innerHTML =
         `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
       if (e.inputType != "deleteContentBackward" && query.length > 3) {
