@@ -90,8 +90,10 @@ async function inputEvent(input, e) {
       results = await suggest(query);
     }
     if (results.length == 0) {
-      document.getElementById("search-results").innerHTML =
-        "Cette situation clinique n'est pas encore disponible";
+      let searchResults = document.getElementById("search-results");
+      searchResults.style.background = "linear-gradient(to right, #000000, #1B1B1B);"
+      searchResults.innerHTML =
+        `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
       if (e.inputType != "deleteContentBackward" && query.length > 3) {
         updateQueryCount(query, false);
       }
