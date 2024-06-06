@@ -1,9 +1,9 @@
 var params = new URLSearchParams(location.search);
 let query = params.get("query");
 const page = params.get("page") ?? 1;
-const baseUrl = window.location.origin.includes('webflow.io') 
-  ? 'https://ordotype.webflow.io' 
-  : 'https://www.ordotype.fr';
+//const baseUrl = window.location.origin.includes('webflow.io') 
+  //? 'https://ordotype.webflow.io' 
+  //: 'https://www.ordotype.fr';
 
 let resultList = document.getElementById("search-result-wraper");
 
@@ -86,7 +86,8 @@ function keyDownEvent(e) {
 async function searchAll(query, page) {
     try {
       const response = await axios.post(
-        "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-23/_search",
+        `${ES_URL}/_search`,
+        //"https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-staging-2024-05-23/_search",
         {
           query: {
             query_string: {
