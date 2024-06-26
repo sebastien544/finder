@@ -246,10 +246,10 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     displayAll();
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
-            if (el.targer.innerText == "Tous les résultats") {
+            if (el.target.innerText == "Tous les résultats") {
                 displayAll(query, page);
             } else {
-                displayAll(query, page, el.targer.innerText);
+                displayAll(query, page, el.target.innerText);
             }
         })
     })
