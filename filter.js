@@ -1,10 +1,11 @@
 var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
+var activeFilter = "";
 
 async function inputEvent(input, e) {
   query = input.value.trim();
-  displayAll();
+  displayAll(activeFilter);
 }
 
 function displayPagination(totalResults, query){
@@ -251,6 +252,7 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     displayAll();
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
+            activeFilter = el;
             if (el.target.innerText != "Tous les résultats") {
                 displayAll(el);
             } 
