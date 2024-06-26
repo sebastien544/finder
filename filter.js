@@ -243,7 +243,7 @@ async function displayAll(filter){
   }
 
 query != null && document.addEventListener("DOMContentLoaded", () => {
-    displayAll;
+    displayAll();
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
             if (el.innerText == "Tous les résultats") {
