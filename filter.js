@@ -176,9 +176,10 @@ async function searchFilter(query, page, filter) {
     }
 }
 
-async function displayAll(filter){
-    let resultList = document.querySelector('#search-result-body');
-    let results = await searchFilter(query, page, filter);
+async function displayAll(el){
+    let numTab = el.currentTarget.getAttribute('data-w-tab');
+    let resultList = document.querySelector(`div[data-w-tab="${numTab}"] div.search-result-body`);
+    let results = await searchFilter(query, page, el.target.innerText);
     if (results.length == 0) {
       results = await suggest(query);
       document.getElementById('suggestions').innerText = ''; // Voici quelques suggestions
@@ -246,11 +247,9 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     displayAll();
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
-            if (el.target.innerText == "Tous les résultats") {
-                displayAll();
-            } else {
-                displayAll(el.target.innerText);
-            }
+            if (el.target.innerText != "Tous les résultats") {
+                displayAll(el);
+            } 
         })
     })
 });
