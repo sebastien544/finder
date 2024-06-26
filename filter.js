@@ -1,7 +1,7 @@
 var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
-var activeTab  = "";
+var activeTab  = "Tab 1";
 var activeFilter = "";
 
 async function inputEvent(input, e) {
