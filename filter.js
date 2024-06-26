@@ -249,7 +249,7 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
             if (el.innerText == "Tous les résultats") {
                 displayAll(query, page);
             } else {
-                displayAll(query, page, filter);
+                displayAll(query, page, el.innerText);
             }
         })
     })
