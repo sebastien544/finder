@@ -2,7 +2,7 @@ var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
 //var resultList = document.getElementById("search-result-wraper");
-let resultList = document.querySelector('.srt-tab-pane');
+let resultList = document.querySelector('.search-result-body');
 
 function displayPagination(totalResults, query){
     const totalPages = Math.ceil(totalResults / 10);
