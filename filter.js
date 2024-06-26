@@ -2,7 +2,6 @@ var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
 //var resultList = document.getElementById("search-result-wraper");
-let resultList = document.querySelector('#search-result-body');
 
 function displayPagination(totalResults, query){
     const totalPages = Math.ceil(totalResults / 10);
@@ -178,6 +177,7 @@ async function searchFilter(query, page, filter) {
 }
 
 async function displayAll(filter){
+    let resultList = document.querySelector('#search-result-body');
     let results = await searchFilter(query, page, filter);
     if (results.length == 0) {
       results = await suggest(query);
