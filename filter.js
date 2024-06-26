@@ -178,7 +178,7 @@ async function searchFilter(query, page, filter) {
 }
 
 async function displayAll(filter){
-    let results = await searchfilter(query, page, filter);
+    let results = await searchFilter(query, page, filter);
     if (results.length == 0) {
       results = await suggest(query);
       document.getElementById('suggestions').innerText = ''; // Voici quelques suggestions
