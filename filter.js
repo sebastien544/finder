@@ -1,7 +1,11 @@
 var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
-//var resultList = document.getElementById("search-result-wraper");
+
+async function inputEvent(input, e) {
+  query = input.value.trim();
+  displayAll();
+}
 
 function displayPagination(totalResults, query){
     const totalPages = Math.ceil(totalResults / 10);
