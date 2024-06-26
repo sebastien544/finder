@@ -1,11 +1,12 @@
 var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
+var activeTab  = "";
 var activeFilter = "";
 
 async function inputEvent(input, e) {
   query = input.value.trim();
-  displayAll(activeFilter);
+  displayAll();
 }
 
 function displayPagination(totalResults, query){
@@ -181,10 +182,10 @@ async function searchFilter(query, page, filter) {
     }
 }
 
-async function displayAll(el){
-    let numTab = el.currentTarget.getAttribute('data-w-tab');
+async function displayAll(){
+    numTab = activeTab;
     let resultList = document.querySelector(`div[data-w-tab="${numTab}"] div.search-result-body`);
-    let results = await searchFilter(query, page, el.target.innerText);
+    let results = await searchFilter(query, page, activeFilter);
     if (results.length == 0) {
       results = await suggest(query);
       document.getElementById('suggestions').innerText = ''; // Voici quelques suggestions
@@ -252,9 +253,10 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     displayAll();
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
-            activeFilter = el;
+            activeTab = el.currentTarget.getAttribute('data-w-tab');
+            activeFilter = el.target.innerText;
             if (el.target.innerText != "Tous les résultats") {
-                displayAll(el);
+                displayAll();
             } 
         })
     })
