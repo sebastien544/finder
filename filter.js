@@ -247,9 +247,9 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
             if (el.target.innerText == "Tous les résultats") {
-                displayAll(query, page);
+                displayAll();
             } else {
-                displayAll(query, page, el.target.innerText);
+                displayAll(el.target.innerText);
             }
         })
     })
