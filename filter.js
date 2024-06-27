@@ -15,7 +15,7 @@ searchBarMain?.addEventListener("input", async (event) => {
 
 function displayPagination(totalResults, query){
     const totalPages = Math.ceil(totalResults / 10);
-    const paginationDiv = document.getElementById('pagination');
+    const paginationDiv = document.querySelector(`div[data-w-tab="${numTab}"] div.pagination`);
     paginationDiv.innerHTML = '';
     paginationDiv.style.cssText = "display: flex; justify-content: center; grid-column-gap: .5rem; align-items: center;"
   
