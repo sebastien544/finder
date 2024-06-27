@@ -9,6 +9,10 @@ async function inputEvent(input, e) {
   displayAll();
 }
 
+searchBarMain?.addEventListener("input", async (event) => {
+  await inputEvent(searchBarMain, event);
+});
+
 function displayPagination(totalResults, query){
     const totalPages = Math.ceil(totalResults / 10);
     const paginationDiv = document.getElementById('pagination');
