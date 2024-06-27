@@ -186,7 +186,7 @@ async function searchFilter(query, page, filter) {
     }
 }
 
-async function displayAll(){ab
+async function displayAll(){
     let resultList = document.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
     let results = await searchFilter(query, page, activeFilter);
     if (results.length == 0) {
