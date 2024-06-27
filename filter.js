@@ -15,7 +15,7 @@ searchBarMain?.addEventListener("input", async (event) => {
 
 function displayPagination(totalResults, query){
     const totalPages = Math.ceil(totalResults / 10);
-    const paginationDiv = document.querySelector(`div[data-w-tab="${numTab}"] div.pagination`);
+    const paginationDiv = document.querySelector(`div[data-w-tab="${activeTab}"] div.pagination`);
     paginationDiv.innerHTML = '';
     paginationDiv.style.cssText = "display: flex; justify-content: center; grid-column-gap: .5rem; align-items: center;"
   
@@ -186,9 +186,8 @@ async function searchFilter(query, page, filter) {
     }
 }
 
-async function displayAll(){
-    numTab = activeTab;
-    let resultList = document.querySelector(`div[data-w-tab="${numTab}"] div.search-result-body`);
+async function displayAll(){ab
+    let resultList = document.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
     let results = await searchFilter(query, page, activeFilter);
     if (results.length == 0) {
       results = await suggest(query);
