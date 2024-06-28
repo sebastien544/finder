@@ -6,6 +6,7 @@ var activeFilter = "";
 
 async function inputEvent(input, e) {
   query = input.value.trim();
+  page = 1;
   displayAll();
 }
 
