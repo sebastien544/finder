@@ -262,7 +262,7 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('#filter a').forEach((el) => {
         el.addEventListener('click', (el) => {
             activeTab = el.currentTarget.getAttribute('data-w-tab');
-            activeFilter = el.target.innerText;
+            activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
             page = 1;
             displayAll();
         })
