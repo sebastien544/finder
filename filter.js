@@ -29,7 +29,7 @@ function displayPagination(totalResults, query){
         let number = document.createTextNode(index);
          link.addEventListener('click', () => {
              event.preventDefault();
-             page = href;
+             page = index;
              displayAll();
         })
         link.appendChild(number);
