@@ -263,9 +263,8 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
         el.addEventListener('click', (el) => {
             activeTab = el.currentTarget.getAttribute('data-w-tab');
             activeFilter = el.target.innerText;
-            if (el.target.innerText != "Tous les résultats") {
-                displayAll();
-            } 
+            page = 1;
+            displayAll();
         })
     })
 });
