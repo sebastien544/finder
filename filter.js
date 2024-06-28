@@ -27,6 +27,11 @@ function displayPagination(totalResults, query){
         if (index == page) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
         link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${index}`);
         let number = document.createTextNode(index);
+         link.addEventListener('click', () => {
+             event.preventDefault();
+             page = href;
+             displayAll();
+        })
         link.appendChild(number);
         paginationDiv.appendChild(link);
       }
