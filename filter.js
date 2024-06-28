@@ -93,6 +93,11 @@ function displayPagination(totalResults, query){
           }
   
           link.setAttribute('href', `${baseUrl}/search-result?query=${query}&page=${href}`);
+          link.addEventListener('click', () => {
+             event.preventDefault();
+             page = href;
+             displayAll();
+          })
           link.appendChild(number);
           paginationDiv.appendChild(link);
       }
