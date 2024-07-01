@@ -332,7 +332,8 @@
 function displayResults(results, input) {
   var activeTab  = "Tab 1";
   let resultList = document.getElementById("search-results");
-  let searchResult = document.querySelector('#search-result');
+  let searchResultOriginal = document.querySelector('#search-result');
+  var searchResult = searchResultOriginal.cloneNode(true);
   let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
 
   if (!resultList) {
