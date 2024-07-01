@@ -330,7 +330,10 @@
 
 // Display the search results
 function displayResults(results, input) {
+  var activeTab  = "Tab 1";
   let resultList = document.getElementById("search-results");
+  let searchResult = document.querySelector('#search-result');
+  let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
 
   if (!resultList) {
     resultList = document.createElement("div");
@@ -359,12 +362,12 @@ function displayResults(results, input) {
     resultList.style.zIndex = (input.id == "search-bar-main" || input.id == "search-bar-hp") ? "9999" : "10000";
     resultList.style.background = "white";
 
-    resultList.appendChild(document.querySelector('#search-result'));
+    resultList.appendChild(searchResult);
 
     document.querySelector("body").appendChild(resultList);
   }
 
-  resultList.innerHTML = "";
+  searchResultInner.innerHTML = "";
   
   const query = input.value.trim()
   
@@ -412,7 +415,7 @@ function displayResults(results, input) {
     resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
     resultElement.appendChild(div);  // Add img element
 
-    resultList.appendChild(resultElement);
+    searchResultInner.appendChild(resultElement);
 });
 
 }
