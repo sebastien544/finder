@@ -418,9 +418,13 @@ async function search(query, filter) {
 // Display the search results
 function displayResults(results, input) {
   let resultList = document.getElementById("search-results");
-  var searchResult = resultList.getElementById('filter');
-  let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
   const query = input.value.trim()
+  
+  if (resultList) {
+    var searchResult = resultList.getElementById('filter');
+    let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
+    searchResultInner.innerHTML = "";
+  }
   
   if (!resultList) {
     resultList = document.createElement("div");
@@ -450,9 +454,9 @@ function displayResults(results, input) {
     resultList.style.background = "white";
 
     let searchResultOriginal = document.querySelector('#search-result');
-    searchResult = searchResultOriginal.cloneNode(true);
+    var searchResult = searchResultOriginal.cloneNode(true);
     searchResult.id = "filter";
-    searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
+    let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
     searchResult.querySelectorAll(a).forEach((el) => {
       el.addEventListener('click', (el) => {
           activeTab = el.currentTarget.getAttribute('data-w-tab');
@@ -466,8 +470,6 @@ function displayResults(results, input) {
     document.querySelector("body").appendChild(resultList);
   }
 
-  searchResultInner.innerHTML = "";
-  
   results.forEach((result, index) => {
     const resultElement = document.createElement("a");
 
