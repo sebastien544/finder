@@ -36,7 +36,6 @@
 // const searchBarNav = document.getElementById("search-bar-nav");
 // const searchBarMain = document.getElementById("search-bar-main");
 // //const searchBarHomepage = document.getElementById("search-bar-hp");
-var activeTab  = "Tab 1";
 
 // searchBarNav?.addEventListener("input", async (event) => {
 //    await inputEvent(searchBarNav, event);
@@ -422,7 +421,7 @@ function displayResults(results, input) {
   
   if (resultList) {
     var searchResult = resultList.querySelector('#filter');
-    searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
+    searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`);
     searchResultInner.innerHTML = "";
   }
   
@@ -456,10 +455,10 @@ function displayResults(results, input) {
     let searchResultOriginal = document.querySelector('#search-result');
     var searchResult = searchResultOriginal.cloneNode(true);
     searchResult.id = "filter";
-    searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
+    searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
     searchResult.querySelectorAll('a').forEach((el) => {
       el.addEventListener('click', (el) => {
-          activeTab = el.currentTarget.getAttribute('data-w-tab');
+          el.preventDefault();
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
           clickEvent(activeFilter) ;
       })
