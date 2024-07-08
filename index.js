@@ -87,8 +87,8 @@ var activeTab  = "Tab 1";
 // //   }, 2000)
 // // });
 
-async function clickEvent(query, activeFilter) {
-  let results = await search(query, activeFilter);
+async function clickEvent(activeFilter) {
+  let results = await search(searchBarMain.value.trim(), activeFilter);
   displayResults(results, searchBarMain);
 }
 
@@ -463,7 +463,7 @@ function displayResults(results, input) {
           el.preventDefault();
           activeTab = el.currentTarget.getAttribute('data-w-tab');
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
-          clickEvent(query, activeFilter) ;
+          clickEvent(activeFilter) ;
       })
     })
 
