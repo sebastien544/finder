@@ -455,6 +455,7 @@ function displayResults(results, input) {
     let searchResultOriginal = document.querySelector('#search-result');
     var searchResult = searchResultOriginal.cloneNode(true);
     searchResult.id = "filter";
+    searchResult.style.display = "block";
     searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
     searchResult.querySelectorAll('a').forEach((el) => {
       el.addEventListener('click', (el) => {
