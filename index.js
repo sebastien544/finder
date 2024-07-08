@@ -36,6 +36,7 @@
 // const searchBarNav = document.getElementById("search-bar-nav");
 // const searchBarMain = document.getElementById("search-bar-main");
 // //const searchBarHomepage = document.getElementById("search-bar-hp");
+var activeTab  = "Tab 1";
 
 // searchBarNav?.addEventListener("input", async (event) => {
 //    await inputEvent(searchBarNav, event);
@@ -85,6 +86,11 @@
 // //       query.length > 0 && updateQueryCount(query, true, false);
 // //   }, 2000)
 // // });
+
+async function clickEvent(query, activeFilter) {
+  let results = await search(query, activeFilter);
+  displayResults(results, searchBarMain);
+}
 
 // async function inputEvent(input, e) {
 //   currentFocus = -1;
@@ -220,6 +226,87 @@
 //   }
 // }
 
+async function search(query, filter) {
+  try {
+    const response = await axios.post(
+      `${ES_URL}/_search`,
+      {
+          query: {
+              bool: {
+                  must: [
+                      {
+                          bool: {
+                              should : [
+                                  {
+                                      query_string: {
+                                          query: query + "*",
+                                          fields: [
+                                              "Boost^6",
+                                              "Name^5",
+                                              "Alias^4",
+                                              "Ordonnances médicales^3",
+                                              "Conseils patient^2",
+                                              "Informations cliniques - HTML",
+                                          ]
+                                      }
+                                  },
+                                  {
+                                      fuzzy: {
+                                      Name: {
+                                          value: query,
+                                          fuzziness: "AUTO"
+                                      }
+                                      }
+                                  },
+                                  {
+                                      fuzzy: {
+                                      Alias: {
+                                          value: query,
+                                          fuzziness: "AUTO"
+                                      }
+                                      }
+                                  }
+                              ]
+                          }
+                      }
+                  ],
+                  filter: filter ? [
+                      {
+                          term: {
+                              Wording_Logo: filter
+                          }
+                      }
+                  ] : []
+              }
+          },
+        size: 6,
+        sort: [
+          { _score: { order: "desc" } },
+          { Alias: { order: "desc", missing: "_last" } },
+          { "Ordonnances médicales": { order: "desc", missing: "_last" } },
+          { "Conseils patient": { order: "desc", missing: "_last" } },
+        ]
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "ApiKey bFk2VGs0Y0JHcFJXRm1EZENyaGU6R0xpOHdPUENUSXlxS3NvMGhna3JTUQ==",
+        },
+      }
+    );
+      
+    return response.data.hits.hits.map((hit) => ({
+      Name: hit._source.Name,
+      Slug: hit._source.Slug,
+      Img: hit._source.Logo_for_finder_URL,
+      wordingLogo: hit._source.Wording_Logo
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // // Execute the Elasticsearch search query
 // async function search(query) {
 //   try {
@@ -330,12 +417,11 @@
 
 // Display the search results
 function displayResults(results, input) {
-  var activeTab  = "Tab 1";
   let resultList = document.getElementById("search-results");
-  let searchResultOriginal = document.querySelector('#search-result');
-  var searchResult = searchResultOriginal.cloneNode(true);
+  var searchResult = resultList.getElementById('filter');
   let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
-
+  const query = input.value.trim()
+  
   if (!resultList) {
     resultList = document.createElement("div");
     resultList.id = "search-results";
@@ -363,14 +449,24 @@ function displayResults(results, input) {
     resultList.style.zIndex = (input.id == "search-bar-main" || input.id == "search-bar-hp") ? "9999" : "10000";
     resultList.style.background = "white";
 
+    let searchResultOriginal = document.querySelector('#search-result');
+    searchResult = searchResultOriginal.cloneNode(true);
+    searchResult.id = "filter";
+    searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
+    searchResult.querySelectorAll(a).forEach((el) => {
+      el.addEventListener('click', (el) => {
+          activeTab = el.currentTarget.getAttribute('data-w-tab');
+          activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
+          clickEvent(query, activeFilter) ;
+      })
+    })
+
     resultList.appendChild(searchResult);
 
     document.querySelector("body").appendChild(resultList);
   }
 
   searchResultInner.innerHTML = "";
-  
-  const query = input.value.trim()
   
   results.forEach((result, index) => {
     const resultElement = document.createElement("a");
