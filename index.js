@@ -422,7 +422,7 @@ function displayResults(results, input) {
   const query = input.value.trim()
   
   if (resultList) {
-    var searchResult = resultList.getElementById('filter');
+    var searchResult = resultList.querySelector('#filter');
     searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
     searchResultInner.innerHTML = "";
   }
