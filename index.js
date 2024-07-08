@@ -460,6 +460,7 @@ function displayResults(results, input) {
     searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
     searchResult.querySelectorAll('a').forEach((el) => {
       el.addEventListener('click', (el) => {
+          el.preventDefault();
           activeTab = el.currentTarget.getAttribute('data-w-tab');
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
           clickEvent(query, activeFilter) ;
