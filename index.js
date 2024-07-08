@@ -457,7 +457,7 @@ function displayResults(results, input) {
     var searchResult = searchResultOriginal.cloneNode(true);
     searchResult.id = "filter";
     let searchResultInner = searchResult.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`)
-    searchResult.querySelectorAll(a).forEach((el) => {
+    searchResult.querySelectorAll('a').forEach((el) => {
       el.addEventListener('click', (el) => {
           activeTab = el.currentTarget.getAttribute('data-w-tab');
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
