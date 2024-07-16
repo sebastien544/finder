@@ -36,6 +36,7 @@
 // const searchBarNav = document.getElementById("search-bar-nav");
 // const searchBarMain = document.getElementById("search-bar-main");
 // //const searchBarHomepage = document.getElementById("search-bar-hp");
+var lastActiveTab = 'Tab 1';
 
 // searchBarNav?.addEventListener("input", async (event) => {
 //    await inputEvent(searchBarNav, event);
@@ -457,10 +458,11 @@ function displayResults(results, input) {
     searchResult.id = "filter";
     searchResult.style.display = "block";
     searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
-    searchResult.querySelectorAll('a').forEach((el) => {
-      el.addEventListener('click', (el) => {
+    searchResult.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', (el) => {
           el.preventDefault();
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
+          el.currentTarget.classList.add('w--current')
           clickEvent(activeFilter) ;
       })
     })
