@@ -462,7 +462,9 @@ function displayResults(results, input) {
       link.addEventListener('click', (el) => {
           el.preventDefault();
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
+          document.querySelector('#filter a[data-w-tab="'+lastActiveTab+'"]').classList.remove('w--current');
           el.currentTarget.classList.add('w--current')
+          lastActiveTab = el.currentTarget.getAttribute('data-w-tab');
           clickEvent(activeFilter) ;
       })
     })
