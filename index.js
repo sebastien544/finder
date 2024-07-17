@@ -495,7 +495,7 @@ function displayResults(results, input) {
     const div =  document.createElement('div');
     
     img.setAttribute("src", result.Img);
-    div.style.cssText = "display: flex; align-items: center; padding: 4px; color: #0c0e16; font-size: 14px;border-radius:4px;";
+    div.style.cssText = "display: flex; align-items: center; padding: 4px; color: #0c0e16; font-size: 14px;border-radius:4px;white-space: nowrap;";
     div.style.backgroundColor = "transparent";
 //       div.style.backgroundColor = "#0c0e160d";
        
