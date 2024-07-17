@@ -95,32 +95,36 @@ async function clickEvent(activeFilter) {
 // async function inputEvent(input, e) {
 //   currentFocus = -1;
 
-//   const query = input.value.trim();
-//   if (query) {
-//     let results = await search(query);
-//     if (results.length == 0) {
-//       results = await suggest(query);
-//     }
-//     if (results.length == 0) {
-//       let searchResults = document.getElementById("search-results");
-//       searchResults.style.background = "#ffffff";
-//       searchResults.style.padding = "16px";
-//       searchResults.innerHTML =
-//         `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
-//       if (e.inputType != "deleteContentBackward" && query.length > 3) {
-//         updateQueryCount(query, false);
-//       }
-//       return true;
-//     }
-//     if (e.inputType != "deleteContentBackward" && query.length > 3) {
-//       updateQueryCount(query);
-//     }
-//     handleSendResultsToGA(input.id);
-//     displayResults(results, input);
-//   } else {
-//     document.querySelector("#search-results")?.remove();
-//   }
-// }
+async function inputEvent(input, e) {
+  currentFocus = -1;
+
+  const query = input.value.trim();
+  if (query) {
+    let filterStored = localStorage.getItem('filter') || "";
+    let results = await search(query, filterStored);
+    if (results.length == 0) {
+      results = await suggest(query);
+    }
+    if (results.length == 0) {
+      let searchResults = document.getElementById("search-results");
+      searchResults.style.background = "#ffffff";
+      searchResults.style.padding = "16px";
+      searchResults.innerHTML =
+        `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
+      if (e.inputType != "deleteContentBackward" && query.length > 3) {
+        updateQueryCount(query, false);
+      }
+      return true;
+    }
+    if (e.inputType != "deleteContentBackward" && query.length > 3) {
+      updateQueryCount(query);
+    }
+    handleSendResultsToGA(input.id);
+    displayResults(results, input);
+  } else {
+    document.querySelector("#search-results")?.remove();
+  }
+}
 
 // window.addEventListener("resize", () => {
 //   const inputRect = searchBarMain?.getBoundingClientRect();
@@ -458,7 +462,12 @@ function displayResults(results, input) {
     searchResult.id = "filter";
     searchResult.style.display = "block";
     searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
-    searchResult.querySelectorAll('a').forEach((link) => {
+    searchResult.querySelectorAll('a').forEach((link, index) => {
+    let filterStored = localStorage.getItem('filter')
+    if (filterStored) {
+      if (index === 0) link.classList.remove('w--current');
+      if (filterStored == link.innerText) link.classList.add('w--current');
+    }   
       link.addEventListener('click', (el) => {
           el.preventDefault();
           activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
