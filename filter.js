@@ -267,7 +267,11 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('#filter a').forEach((link) => {
         if (link.innerText == activeFilter) {
           activeTab = link.getAttribute('data-w-tab');
-          link.click();
+          try {
+            link.click();
+          } catch (error) {
+            console.error(`Error: ${error.message}`);
+          }
         }
         link.addEventListener('click', (el) => {
             activeTab = el.currentTarget.getAttribute('data-w-tab');
