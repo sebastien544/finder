@@ -88,12 +88,13 @@ var lastActiveTab = 'Tab 1';
 // // });
 
 async function clickEvent(activeFilter) {
-  let results = await search(searchBarMain.value.trim(), activeFilter);
+  let query = searchBarMain.value.trim();
+  let results = await search(query, activeFilter);
   if (results.length == 0) {
       let searchResults = document.getElementById("search-results");
       let searchResultInner = searchResults.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
       searchResultInner.innerHTML =
-        `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
+        `Pas de résultats pour "${query}", dans ce module.`;
       return true;
   }
   displayResults(results, searchBarMain);
