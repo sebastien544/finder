@@ -265,7 +265,7 @@ async function displayAll(){
 
 query != null && document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('#filter a').forEach((link) => {
-        if (link.innertText == activeFilter) {
+        if (link.innerText == activeFilter) {
           activeTab = link.getAttribute('data-w-tab');
           link.click();
         }
