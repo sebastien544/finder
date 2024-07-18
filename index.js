@@ -97,7 +97,7 @@ async function clickEvent(activeFilter) {
       div.style.cssText = "height: 100%; display: flex; align-items: center;";
       div.innerHTML =
         `Pas de résultats pour "${query}", dans ce module.`;
-      searchResultInner.appendChild('div');
+      searchResultInner.appendChild(div);
       return true;
   }
   displayResults(results, searchBarMain);
