@@ -466,7 +466,10 @@ function displayResults(results, input) {
     let filterStored = localStorage.getItem('filter')
     if (filterStored) {
       if (index === 0) link.classList.remove('w--current');
-      if (filterStored == link.innerText) link.classList.add('w--current');
+      if (filterStored == link.innerText) {
+        link.classList.add('w--current');
+        lastActiveTab = link.getAttribute('data-w-tab');
+      }
     }   
       link.addEventListener('click', (el) => {
           el.preventDefault();
