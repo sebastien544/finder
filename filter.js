@@ -269,7 +269,7 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
           activeTab = link.getAttribute('data-w-tab');
           link.click();
         }
-        el.addEventListener('click', (el) => {
+        link.addEventListener('click', (el) => {
             activeTab = el.currentTarget.getAttribute('data-w-tab');
             activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
             localStorage.setItem('filter', activeFilter);
