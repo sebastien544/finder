@@ -89,6 +89,13 @@ var lastActiveTab = 'Tab 1';
 
 async function clickEvent(activeFilter) {
   let results = await search(searchBarMain.value.trim(), activeFilter);
+  if (results.length == 0) {
+      let searchResults = document.getElementById("search-results");
+      let searchResultInner = searchResults.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
+      searchResultInner.innerHTML =
+        `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
+      return true;
+  }
   displayResults(results, searchBarMain);
 }
 
