@@ -2,7 +2,7 @@ var params = new URLSearchParams(location.search);
 var query = params.get("query");
 var page = params.get("page") ?? 1;
 var activeTab  = "Tab 1";
-var activeFilter = "";
+var activeFilter = localStorage.getItem('filter') || "";
 
 async function inputEvent(input, e) {
   query = input.value.trim();
@@ -264,13 +264,18 @@ async function displayAll(){
   }
 
 query != null && document.addEventListener("DOMContentLoaded", () => {
-    displayAll();
-    document.querySelectorAll('#filter a').forEach((el) => {
+    document.querySelectorAll('#filter a').forEach((link) => {
+        if (link.innertText == activeFilter) {
+          activeTab = link.getAttribute('data-w-tab');
+          link.click();
+        }
         el.addEventListener('click', (el) => {
             activeTab = el.currentTarget.getAttribute('data-w-tab');
             activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
+            localStorage.setItem('filter', activeFilter);
             page = 1;
             displayAll();
         })
     })
+   displayAll();
 });
