@@ -92,7 +92,7 @@ async function clickEvent(activeFilter) {
   let results = await search(query, activeFilter);
   if (results.length == 0) {
       let searchResults = document.getElementById("search-results");
-      let searchResultInner = searchResults.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
+      let searchResultInner = searchResults.querySelector(`div[data-w-tab="Tab 1"]`)
       const div = document.createElement('div');
       div.style.cssText = "height: 100%; display: flex; align-items: center;";
       div.innerHTML =
