@@ -154,13 +154,13 @@ async function searchFilter(query, page, filter) {
                             }
                         }
                     ],
-                  "filter": filter ? [
-                    {
-                      "match": {
-                        "Alias": filter
-                      }
+                 "filter": filter ? [
+                  {
+                    "wildcard": {
+                      "Wording_Logo": `*${filter}*`
                     }
-                  ] : []
+                  }
+                ] : []
                 }
             },
           size: 20,
