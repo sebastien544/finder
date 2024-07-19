@@ -263,16 +263,13 @@ async function displayAll(){
     });
   }
 
-query != null && document.addEventListener("DOMContentLoaded", () => {
+if (query != null){ 
+  //document.addEventListener("DOMContentLoaded", () => {
+  $(document).ready(function() {
     document.querySelectorAll('#filter a').forEach((link) => {
         if (link.innerText == activeFilter) {
           activeTab = link.getAttribute('data-w-tab');
-          const event = new MouseEvent('click', {
-            view: window,
-            bubbles: true,
-            cancelable: true
-          });
-          link.dispatchEvent(event);
+          link.click();
         }
         link.addEventListener('click', (el) => {
             activeTab = el.currentTarget.getAttribute('data-w-tab');
@@ -283,4 +280,5 @@ query != null && document.addEventListener("DOMContentLoaded", () => {
         })
     })
    displayAll();
-});
+  });
+}
