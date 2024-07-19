@@ -154,12 +154,12 @@ async function searchFilter(query, page, filter) {
                             }
                         }
                     ],
-                    filter: filter ? [
-                        {
-                            term: {
-                                Wording_Logo: filter
-                            }
+                   "filter": filter ? [
+                      {
+                        "wildcard": {
+                          "Alias": `*${filter}*`
                         }
+                      }
                     ] : []
                 }
             },
