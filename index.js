@@ -282,13 +282,13 @@ async function search(query, filter) {
                           }
                       }
                   ],
-                  filter: filter ? [
-                      {
-                          term: {
-                              Wording_Logo: filter
-                          }
-                      }
-                  ] : []
+                   "filter": filter ? [
+                  {
+                    "wildcard": {
+                      "Wording_Logo": `*${filter}*`
+                    }
+                  }
+                ] : []
               }
           },
         size: 6,
