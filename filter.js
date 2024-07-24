@@ -211,7 +211,7 @@ async function displayAll(){
         if (result.filtres.includes("only")){
           let filter;
           if (activeFilter == "") {
-            filter = all;
+            filter = "all";
           }else {
             filter = activeFilter.toString()                  
                                   .normalize('NFD')   
