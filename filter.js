@@ -191,7 +191,8 @@ async function searchFilter(query, page, filter) {
         Name: hit._source.Name,
         Slug: hit._source.Slug,
         Img: hit._source.Logo_for_finder_URL,
-        wordingLogo: hit._source.Wording_Logo
+        wordingLogo: hit._source.Wording_Logo,
+        filtres: hit._source.Filtres
       }));
     } catch (error) {
       console.error(error);
@@ -207,6 +208,22 @@ async function displayAll(){
     }
     resultList.innerHTML = '';
     results.forEach((result, index) => {
+        if (result.filtres.includes("only"){
+          let filter;
+          if (activeFilter == "") {
+            filter = all;
+          }else {
+            filter = activeFilter.toString()                  
+                                  .normalize('NFD')   
+                                  .replace(/[\u0300-\u036f]/g, '')  
+                                  .toLowerCase() 
+                                  .trim() 
+                                  .replace(/[^a-z0-9\s-]/g, '')  
+                                  .replace(/\s+/g, '-') 
+                                  .replace(/-+/g, '-');
+          }
+          if (!result.filtres.includes(filter)) continue;
+        }
         const resultElement = document.createElement("a");
     
         const img = document.createElement("img");
