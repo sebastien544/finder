@@ -222,7 +222,9 @@ async function displayAll(){
                                   .replace(/\s+/g, '-') 
                                   .replace(/-+/g, '-');
           }
-          if (!result.filtres.includes(filter)) continue;
+          if (!result.filtres.includes(filter)){ 
+            continue;
+          }
         }
         const resultElement = document.createElement("a");
     
