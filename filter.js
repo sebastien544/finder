@@ -208,7 +208,7 @@ async function displayAll(){
     }
     resultList.innerHTML = '';
     results.forEach((result, index) => {
-        if (result.filtres.includes("only"){
+        if (result.filtres.includes("only")){
           let filter;
           if (activeFilter == "") {
             filter = all;
