@@ -113,7 +113,8 @@ function displayPagination(totalResults, query){
 async function searchFilter(query, page, filter) {
     try {
       const response = await axios.post(
-        `${ES_URL}/_search`,
+         //`${ES_URL}/_search`,
+       "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-test/_search",
         {
             query: {
                 bool: {
