@@ -37,6 +37,7 @@
 // const searchBarMain = document.getElementById("search-bar-main");
 // //const searchBarHomepage = document.getElementById("search-bar-hp");
 var lastActiveTab = 'Tab 1';
+var activeFilter = localStorage.getItem('filter') || "";
 
 // searchBarNav?.addEventListener("input", async (event) => {
 //    await inputEvent(searchBarNav, event);
