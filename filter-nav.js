@@ -1,15 +1,15 @@
-// // //Set up the Elasticsearch endpoint
+//Set up the Elasticsearch endpoint
 // const ES_ENDPOINT = "https://my-deployment-dd304c.es.europe-west1.gcp.cloud.es.io/my_index";
 
-// // Define Elasticsearch base URLs for staging and production
+// Define Elasticsearch base URLs for staging and production
 // const ES_BASE_URL_STAGING = "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/";
 // const ES_BASE_URL_PRODUCTION = "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/";
 
-// // Define index names for staging and production
+// Define index names for staging and production
 // const ES_INDEX_STAGING = "ordotype-index-2024-06-12"; // old: ordotype-index-staging-2024-01-04 
 // const ES_INDEX_PRODUCTION = "ordotype-index-2024-06-12"; // old : ordotype-index-2023-12-21c
 
-// // Determine the current environment and set the Elasticsearch index
+// Determine the current environment and set the Elasticsearch index
 // const ES_INDEX = window.location.hostname.includes("webflow.io") 
 //      ? ES_INDEX_STAGING 
 //      : ES_INDEX_PRODUCTION;
@@ -52,9 +52,9 @@ var lastActiveTab = 'Tab 1';
 //   await inputEvent(searchBarMain, event);
 // });
 
-// // searchBarHomepage?.addEventListener("input", async (event) => {
-// //   await inputEvent(searchBarHomepage, event);
-// // });
+// searchBarHomepage?.addEventListener("input", async (event) => {
+//   await inputEvent(searchBarHomepage, event);
+// });
 
 // function handleSendResultsToGA(element) {
 //    window.dataLayer.push({ event: "show_search_results", element });
@@ -164,13 +164,13 @@ async function inputEvent(input, e) {
 //    }
 // });
 
-// // searchBarHomepage?.addEventListener("focus", async () => {
-// //   const query = searchBarHomepage.value.trim();
-// //   if (query) {
-// //     const results = await search(query);
-// //     displayResults(results);
-// //   }
-// // });
+// searchBarHomepage?.addEventListener("focus", async () => {
+//   const query = searchBarHomepage.value.trim();
+//   if (query) {
+//     const results = await search(query);
+//     displayResults(results);
+//   }
+// });
 
 // searchBarNav?.addEventListener("keydown", (e) => {
 //   keyDownEvent(e);
@@ -241,7 +241,8 @@ async function inputEvent(input, e) {
 async function search(query, filter) {
   try {
     const response = await axios.post(
-      `${ES_URL}/_search`,
+      //`${ES_URL}/_search`,
+      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-test/_search",
       {
           query: {
               bool: {
@@ -312,7 +313,8 @@ async function search(query, filter) {
       Name: hit._source.Name,
       Slug: hit._source.Slug,
       Img: hit._source.Logo_for_finder_URL,
-      wordingLogo: hit._source.Wording_Logo
+      wordingLogo: hit._source.Wording_Logo,
+      filtres: hit._source.Filtres
     }));
   } catch (error) {
     console.error(error);
@@ -503,6 +505,22 @@ function displayResults(results, input) {
   }
 
   results.forEach((result, index) => {
+     if (result.filtres.includes("only")){
+        let filter;
+        if (activeFilter == "") {
+          filter = "all";
+        }else {
+          filter = activeFilter.toString()                  
+                                .normalize('NFD')   
+                                .replace(/[\u0300-\u036f]/g, '')  
+                                .toLowerCase() 
+                                .trim() 
+                                .replace(/[^a-z0-9\s-]/g, '')  
+                                .replace(/\s+/g, '-') 
+                                .replace(/-+/g, '-');
+        }
+        if (!result.filtres.includes(filter)) return;
+    }
     const resultElement = document.createElement("a");
 
     const img = document.createElement("img");
