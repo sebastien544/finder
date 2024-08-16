@@ -469,6 +469,13 @@ function displayResults(results, input) {
     var searchResult = searchResultOriginal.cloneNode(true);
     searchResult.id = "filter";
     searchResult.style.display = "block";
+    const scrollContainer = searchResult.querySelector('.srt-menu');
+    if (scrollContainer) {
+        scrollContainer.addEventListener('wheel', (evt) => {
+            evt.preventDefault(); // Empêche le défilement vertical
+            scrollContainer.scrollLeft += evt.deltaY; // Applique le défilement horizontal
+        });
+    }
     searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
     searchResult.querySelectorAll('a').forEach((link, index) => {
     let filterStored = localStorage.getItem('filter')
