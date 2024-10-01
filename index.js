@@ -112,7 +112,8 @@ async function search(query, filter) {
             field_value_factor: {
               field: "importance",  // Champ numérique utilisé pour la pondération
               factor: 1.5,          // Facteur multiplicatif pour ajuster l'impact
-              modifier: "sqrt"      // Modificateur pour ajuster l'influence (options : "none", "sqrt", "log", etc.)
+              modifier: "none",      // Modificateur pour ajuster l'influence (options : "none", "sqrt", "log", etc.)
+              missing : 1
             }
           }
         },
