@@ -33,7 +33,7 @@ async function search(query, filter) {
   try {
     const response = await axios.post(
       //`${ES_URL}/_search`,
-      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/test/_search",
+      "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-2024-10-01/_search",
       {
         query : {
           function_score : {
