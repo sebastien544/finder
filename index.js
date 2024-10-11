@@ -21,9 +21,8 @@ searchBarMain?.addEventListener("focus", async () => {
    }
 });
 
-searchBar?.removeEventListener("keydown", (e) => {
-  keyDownEvent(e);
-});
+// Retirer l'event listener
+searchBar?.removeEventListener("keydown", keyDownEvent);
 
 searchBar?.addEventListener("keydown", (e) => {
   if (e.key === 'Enter') {
