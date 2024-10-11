@@ -21,15 +21,45 @@ searchBarMain?.addEventListener("focus", async () => {
    }
 });
 
-// Retirer l'event listener
-searchBar?.removeEventListener("keydown", keyDownEvent);
-
 searchBar?.addEventListener("keydown", (e) => {
   if (e.key === 'Enter') {
      e.preventDefault(); // Empêche l'action par défaut pour la touche Entrée
  }
   keyDownEvent(e);
 });
+
+function keyDownEvent(e) {
+  var x = document.getElementById("search-results") || document.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
+  if (x) {
+     x = x.getElementsByTagName("a");
+  }else {
+     if (e.keyCode == 13) {
+        const query = e.currentTarget.value.trim();
+        window.location.href = `${baseUrl}/search-result?query=${query}&page=1`;
+     }
+  }
+  if (e.keyCode == 40) {
+    if (currentFocus == -1 && !window.location.pathname.includes("search-result")) currentFocus = 3;
+    currentFocus++;
+    /*and and make the current item more visible:*/
+    addActive(x);
+  } else if (e.keyCode == 38) {
+    //up
+    /*If the arrow UP key is pressed,
+    decrease the currentFocus variable:*/
+    currentFocus--;
+    /*and and make the current item more visible:*/
+    addActive(x);
+  } else if (e.keyCode == 13) {
+    if (currentFocus > -1) {
+      /*and simulate a click on the "active" item:*/
+      if (x) x[currentFocus].click();
+    } else {
+        const query = e.currentTarget.value.trim();
+        window.location.href = `${baseUrl}/search-result?query=${query}&page=1`;
+    }
+  }
+}
 
 //async function suggest(query) {
 //   try {
