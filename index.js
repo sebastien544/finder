@@ -29,7 +29,7 @@ searchBar?.addEventListener("keydown", (e) => {
 });
 
 function keyDownEvent(e) {
-  var x = document.getElementById("search-results") || document.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
+  var x = document.getElementById("search-results") || (typeof activeTab !== 'undefined' && document.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`));
   if (x) {
      x = x.getElementsByTagName("a");
   }else {
