@@ -1,8 +1,5 @@
 const planIds = ['pln_compte-praticien-offre-speciale-500-premiers--893z0o60', 'pln_praticien-belgique-2p70qka'];
-const activePlanIds = JSON.parse(localStorage.getItem('_ms-mem') || '{}').planConnections?
-    .filter(item => item.status === "ACTIVE")
-    .map(item => item.planId) || [];
-
+const activePlanIds = JSON.parse(localStorage.getItem('_ms-mem') || '{}').planConnections?.filter(item => item.status === "ACTIVE").map(item => item.planId) || [];
 
 async function inputEvent(input, e) {
   currentFocus = -1;
