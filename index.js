@@ -3,6 +3,56 @@ const activePlanIds = JSON.parse(localStorage.getItem('_ms-mem')).planConnection
     .filter(item => item.status === "ACTIVE")
     .map(item => item.planId);
 
+async function inputEvent(input, e) {
+  currentFocus = -1;
+
+  const query = input.value.trim();
+  if (query) {
+    let filterStored = (activePlanIds.length === 1 && planIds.includes(activePlanIds[0])) 
+    ? "medecine-generale" 
+    : getItemWithExpiration('filterTemp') || "";
+    let results = await search(query, filterStored);
+    if (results.length == 0) {
+      results = await suggest(query);
+    }
+    if (results.length == 0) {
+      let searchResults = document.getElementById("search-results");
+      searchResults.style.background = "#ffffff";
+      searchResults.style.padding = "16px";
+      searchResults.innerHTML =
+        `Pas de résultats pour "${query}". Vérifiez l'orthographe de votre recherche`;
+      if (e.inputType != "deleteContentBackward" && query.length > 3) {
+        updateQueryCount(query, false);
+      }
+      return true;
+    }
+    if (e.inputType != "deleteContentBackward" && query.length > 3) {
+      updateQueryCount(query);
+    }
+    handleSendResultsToGA(input.id);
+    displayResults(results, input);
+  } else {
+    document.querySelector("#search-results")?.remove();
+  }
+}
+
+searchBar?.addEventListener("focus", async () => {
+   const query = searchBar.value.trim();
+
+   if (query) {
+    let filterStored = (activePlanIds.length === 1 && planIds.includes(activePlanIds[0])) 
+    ? "medecine-generale" 
+    : getItemWithExpiration('filterTemp') || "";
+    const results = await search(query, filterStored);
+    if(searchBarMain){
+      handleSendResultsToGA("search-bar-focus");
+    }else{
+      handleSendResultsToGA("search-bar-nav-focus");
+    }
+    displayResults(results, searchBar);
+   }
+});
+
 // Display the search results
 function displayResults(results, input) {
   let resultList = document.getElementById("search-results");
