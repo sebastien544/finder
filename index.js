@@ -6,9 +6,7 @@ async function inputEvent(input, e) {
 
   const query = input.value.trim();
   if (query) {
-    let filterStored = (activePlanIds.length === 1 && planIds.includes(activePlanIds[0])) 
-    ? "medecine-generale" 
-    : getItemWithExpiration('filterTemp') || "";
+    let filterStored = getItemWithExpiration('filterTemp') || (activePlanIds.length === 1 && planIds.includes(activePlanIds[0]) ? "medecine-generale" : "");
     let results = await search(query, filterStored);
     if (results.length == 0) {
       results = await suggest(query);
@@ -38,9 +36,7 @@ searchBar?.addEventListener("focus", async () => {
    const query = searchBar.value.trim();
 
    if (query) {
-    let filterStored = (activePlanIds.length === 1 && planIds.includes(activePlanIds[0])) 
-    ? "medecine-generale" 
-    : getItemWithExpiration('filterTemp') || "";
+    let filterStored = getItemWithExpiration('filterTemp') || (activePlanIds.length === 1 && planIds.includes(activePlanIds[0]) ? "medecine-generale" : "");
     const results = await search(query, filterStored);
     if(searchBarMain){
       handleSendResultsToGA("search-bar-focus");
@@ -112,15 +108,15 @@ function displayResults(results, input) {
     searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
     searchResult.querySelectorAll('a').forEach((link, index) => {
     let filterStored = getItemWithExpiration('filterTemp');  
-    if (activePlanIds.length === 1 && planIds.includes(activePlanIds[0])) {
-        if (index === 0) link.classList.remove('w--current');
-       if(link.innerText == "Médecine générale") link.classList.add('w--current');     
-    } else if (filterStored) {
-      if (index === 0) link.classList.remove('w--current');
+    if (filterStored) {
+    if (index === 0) link.classList.remove('w--current');
       if (filterStored == transformString(link.innerText)) {
-        link.classList.add('w--current');
-        lastActiveTab = link.getAttribute('data-w-tab');
+          link.classList.add('w--current');
+          lastActiveTab = link.getAttribute('data-w-tab');
       }
+    } else if (activePlanIds.length === 1 && planIds.includes(activePlanIds[0])) {
+      if (index === 0) link.classList.remove('w--current');
+      if (link.innerText == "Médecine générale") link.classList.add('w--current');
     }
       link.addEventListener('click', (el) => {
           el.preventDefault();
