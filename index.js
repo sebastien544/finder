@@ -6,9 +6,6 @@ async function inputEvent(input, e) {
     let filterStored = getItemWithExpiration('filterTemp') || (activePlanIds.length === 1 && planIds.includes(activePlanIds[0]) ? "medecine-generale" : "");
     let results = await search(query, filterStored);
     if (results.length == 0) {
-      results = await suggest(query);
-    }
-    if (results.length == 0) {
       let searchResults = document.getElementById("search-results");
       searchResults.style.background = "#ffffff";
       searchResults.style.padding = "16px";
