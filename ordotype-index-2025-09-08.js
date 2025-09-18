@@ -10,7 +10,7 @@ const ES_INDEX = IS_STAGING ? ES_INDEX_STAGING : ES_INDEX_PRODUCTION;
 // Final Elasticsearch URL
 const ES_URL = `${ES_BASE_URL}${ES_INDEX}`;
 
-const baseUrl = window.location.origin;
+//const baseUrl = window.location.origin;
 
 let currentFocus;
 
