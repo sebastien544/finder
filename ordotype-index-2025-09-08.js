@@ -12,7 +12,7 @@ const ES_URL = `${ES_BASE_URL}${ES_INDEX}`;
 
 //const baseUrl = window.location.origin;
 
-let currentFocus;
+//let currentFocus;
 
 // Handle click outside of search results
 document.addEventListener("click", ({ target }) => {
@@ -22,20 +22,20 @@ document.addEventListener("click", ({ target }) => {
   }
 });
 
-const searchBarNav = document.getElementById("search-bar-nav");
-const searchBarMain = document.getElementById("search-bar-main");
-let searchBar;
+//const searchBarNav = document.getElementById("search-bar-nav");
+//const searchBarMain = document.getElementById("search-bar-main");
+//let searchBar;
 if (window.location.pathname.includes("search-result") && window.innerWidth > 767) {
   searchBar = searchBarNav;
 } else {
   searchBar = searchBarMain || searchBarNav;
 }
 
-var lastActiveTab = 'Tab 1';
+//var lastActiveTab = 'Tab 1';
 //var activeFilter = getItemWithExpiration('filterTemp') || "";
-const planIds = ['pln_compte-praticien-offre-speciale-500-premiers--893z0o60', 'pln_praticien-belgique-2p70qka'];
-const activePlanIds = JSON.parse(localStorage.getItem('_ms-mem') || '{}').planConnections?.filter(item => item.status === "ACTIVE" || item.status == "REQUIRES_PAYMENT").map(item => item.planId) || [];
-let activeFilter = (getItemWithExpiration('filterTemp')) 
+//const planIds = ['pln_compte-praticien-offre-speciale-500-premiers--893z0o60', 'pln_praticien-belgique-2p70qka'];
+//const activePlanIds = JSON.parse(localStorage.getItem('_ms-mem') || '{}').planConnections?.filter(item => item.status === "ACTIVE" || item.status == "REQUIRES_PAYMENT").map(item => item.planId) || [];
+/*let activeFilter = (getItemWithExpiration('filterTemp')) 
     || (
       ((activePlanIds.length === 1 && planIds.includes(activePlanIds[0]))
       || (activePlanIds.length === 2 
@@ -44,7 +44,7 @@ let activeFilter = (getItemWithExpiration('filterTemp'))
       )
       ? "medecine-generale"
       : ""
-    );
+    );*/
 
 searchBar?.addEventListener("input", async (event) => {
   await inputEvent(searchBar, event);
