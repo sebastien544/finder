@@ -24,12 +24,12 @@ document.addEventListener("click", ({ target }) => {
 
 //const searchBarNav = document.getElementById("search-bar-nav");
 //const searchBarMain = document.getElementById("search-bar-main");
-/*let searchBar;
+let searchBar;
 if (window.location.pathname.includes("search-result") && window.innerWidth > 767) {
   searchBar = searchBarNav;
 } else {
   searchBar = searchBarMain || searchBarNav;
-}*/
+}
 
 //var lastActiveTab = 'Tab 1';
 //var activeFilter = getItemWithExpiration('filterTemp') || "";
