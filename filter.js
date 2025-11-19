@@ -211,6 +211,8 @@ function displayResults(results, input) {
   let shown = 0;
 
   results.forEach((result, index) => {
+    if (shown >= 10) return;
+    
     if (result.filtres.includes("only")){
       let filter;
       if (activeFilter == "") {
@@ -259,6 +261,5 @@ function displayResults(results, input) {
     searchResultInner.appendChild(resultElement);
 
     shown++;
-    if (shown >= 10) return;
   });
 }
