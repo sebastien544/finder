@@ -1,335 +1,264 @@
-var params = new URLSearchParams(location.search);
-var query = params.get("query");
-var page = params.get("page") ?? 1;
-var activeTab  = "Tab 1";
-var activeFilter = localStorage.getItem('filter') || "";
-
-async function inputEvent(input, e) {
-  query = input.value.trim();
-  page = 1;
-  displayAll();
-}
-
-function keyDownEvent(e) {
-  var x = document.getElementById("search-results");
-  if (x) x = x.getElementsByTagName("a");
-  if (e.keyCode == 40) {
-    currentFocus++;
-    /*and and make the current item more visible:*/
-    addActive(x);
-  } else if (e.keyCode == 38) {
-    //up
-    /*If the arrow UP key is pressed,
-    decrease the currentFocus variable:*/
-    currentFocus--;
-    /*and and make the current item more visible:*/
-    addActive(x);
-  } else if (e.keyCode == 13) {
-    /*If the ENTER key is pressed, prevent the form from being submitted,*/
-    e.preventDefault();
-    if (currentFocus > -1) {
-      /*and simulate a click on the "active" item:*/
-      if (x) x[currentFocus].click();
-    } else {
-        const query = e.currentTarget.value.trim();
-        window.location.href = `${baseUrl}/search-result-copy?query=${query}&page=1`;
+async function search(query, filter, page) {
+  try {
+    const q = (query || "").toLowerCase().trim();
+    if (!q) {
+      return { results: [], fromSuggest: false };
     }
-  }
-}
 
-
-searchBarMain?.addEventListener("input", async (event) => {
-  await inputEvent(searchBarMain, event);
-});
-
-
-searchBarMain?.addEventListener("keydown", (e) => {
-  keyDownEvent(e);
-});
-
-function displayPagination(totalResults, query){
-    const totalPages = Math.ceil(totalResults / 10);
-    const paginationDiv = document.querySelector(`div[data-w-tab="${activeTab}"] div#pagination`);
-    paginationDiv.innerHTML = '';
-    paginationDiv.style.cssText = "display: flex; justify-content: center; grid-column-gap: .5rem; align-items: center;"
-  
-    if (totalPages <= 7) {
-      for (let index = 1; index <= totalPages; index++) {
-        let link  = document.createElement('a')
-        link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600; color: #0c0e16;'
-        if (index == page) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-        link.setAttribute('href', `http://ordotype.webflow.io/search-result?query=${query}&page=${index}`);
-        let number = document.createTextNode(index);
-         link.addEventListener('click', () => {
-             event.preventDefault();
-             page = index;
-             displayAll();
-        })
-        link.appendChild(number);
-        paginationDiv.appendChild(link);
-      }
-    } else {
-      for (let index = 1; index < 8; index++) {
-          let link  = document.createElement('a')
-          link.style.cssText = 'text-decoration: none;margin: 0px 10px; font-weight: 600; color: #0c0e16;'
-          if (page <= 4 && index == page) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-        
-          let number = document.createTextNode(index);
-          let href = index;
-          switch (index) {
-            case 2:
-              if (page > 4) number = document.createTextNode('...');
-              break;
-            case 3:
-              if (page > 4) {
-                number = document.createTextNode(parseInt(page)-1);
-                href = parseInt(page)-1;
-              } 
-              if ( page > totalPages - 3 ){ 
-                number = document.createTextNode(totalPages - 4);
-                href = totalPages - 4;
-              }
-              break;
-            case 4:
-              if (page > 4) {
-                number = document.createTextNode(page);
-                href = page;
-              } 
-              if (page > 4 && (page <= totalPages - 3)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-              if ( page > totalPages - 3 ){ 
-                number = document.createTextNode(totalPages - 3);
-                href = totalPages - 3;
-                if(page == (totalPages - 3)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-              }
-              break;
-            case 5: 
-              if (page > 4) {
-                number = document.createTextNode(parseInt(page)+1);
-                href = parseInt(page)+1;
-              } 
-              if ( page > totalPages - 3 ){ 
-                number = document.createTextNode(totalPages - 2);
-                href = totalPages - 2;
-                if(page == (totalPages - 2)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-              }
-              break;
-            case 6:
-              if ( page > totalPages - 3 ){
-                number = document.createTextNode(totalPages - 1);
-                href = totalPages - 1;
-                if(page == (totalPages - 1)) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-              } else {
-                number = document.createTextNode('...');
-              }
-              break;
-            case 7:
-              number = document.createTextNode(totalPages);
-              href = totalPages;
-              if(page == totalPages) link.style.cssText = "background-color: #3454f6; color: white; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; padding: 0; text-decoration: none;";
-              break;
-            default:
-              break;
-          }
-  
-          link.setAttribute('href', `${baseUrl}/search-result?query=${query}&page=${href}`);
-          link.addEventListener('click', () => {
-             event.preventDefault();
-             page = href;
-             displayAll();
-          })
-          link.appendChild(number);
-          paginationDiv.appendChild(link);
+    // 🔹 Construire tous les préfixes 
+    const prefixes = [];
+    for (let i = q.length; i >= 1; i--) {
+      const p = q.slice(0, i);
+      if (!prefixes.includes(p)) {
+        prefixes.push(p);
       }
     }
-  }
 
-async function searchFilter(query, page, filter) {
-    try {
-      const response = await axios.post(
-         //`${ES_URL}/_search`,
-       "https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-test/_search",
-        {
-            query: {
-                bool: {
-                    must: [
-                        {
+    // 🔹 Construire les clauses prefix avec boost décroissant
+    // le plus long préfixe = boost le plus élevé
+    const shouldClauses = prefixes.map((p, idx) => ({
+      prefix: {
+        "Name.keyword": {
+          value: p,
+          boost: prefixes.length - idx // ex : 5,4,3,2,1
+        }
+      }
+    }));
+
+    const body = {
+      query: {
+        function_score: {
+          query: {
+            bool: {
+              should: shouldClauses,
+              minimum_should_match: 1,
+              filter: filter
+                ? [{ wildcard: { Filtres: `*${filter}*` } }]
+                : [],
+              must_not: !filter
+                ? [
+                    {
+                      bool: {
+                        must: [
+                          { wildcard: { Filtres: "*only*" } },
+                          {
                             bool: {
-                                should : [
-                                    {
-                                        query_string: {
-                                            query: query + "*",
-                                            fields: [
-                                                "Boost^6",
-                                                "Name^5",
-                                                "Alias^4",
-                                                "Ordonnances médicales^3",
-                                                "Conseils patient^2",
-                                                "Informations cliniques - HTML",
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        fuzzy: {
-                                        Name: {
-                                            value: query,
-                                            fuzziness: "AUTO"
-                                        }
-                                        }
-                                    },
-                                    {
-                                        fuzzy: {
-                                        Alias: {
-                                            value: query,
-                                            fuzziness: "AUTO"
-                                        }
-                                        }
-                                    }
-                                ]
+                              must_not: [{ term: { Filtres: "all-only" } }]
                             }
-                        }
-                    ],
-                 "filter": filter ? [
-                  {
-                    "wildcard": {
-                      "Wording_Logo": `*${filter}*`
+                          }
+                        ]
+                      }
                     }
-                  }
-                ] : []
-                }
-            },
-          size: 20,
-          from: page*20-20,
-          sort: [
-            { _score: { order: "desc" } },
-            { Alias: { order: "desc", missing: "_last" } },
-            { "Ordonnances médicales": { order: "desc", missing: "_last" } },
-            { "Conseils patient": { order: "desc", missing: "_last" } },
-          ]
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "ApiKey bFk2VGs0Y0JHcFJXRm1EZENyaGU6R0xpOHdPUENUSXlxS3NvMGhna3JTUQ==",
+                  ]
+                : []
+            }
           },
+          field_value_factor: {
+            field: "Importance",
+            factor: 1.5,
+            modifier: "none",
+            missing: 1
+          }
         }
-      );
-        
-      let searchTitle = document.getElementById('search-title')
-      searchTitle.innerHTML = '';
-      searchTitle.innerHTML = `${response.data.hits.total.value} Résultats pour "${query}"`;
+      },
+
+      // 🔹 Suggest comme fallback éventuel (inchangé)
+      suggest: {
+        med_suggest: {
+          prefix: query,
+          completion: {
+            field: "Slug",
+            fuzzy: {
+              fuzziness: 2
+            }
+          }
+        }
+      },
+
+      size: 30,
+
+      // 🔹 Tri : d'abord score (donc malad* > mala* > mal* > ma* > m*), puis alpha
+      sort: [
+        { _score: { order: "desc" } },
+        { "Name.keyword": { order: "asc" } }
+      ]
+    };
+
+    const response = await axios.post(
+      `https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/test/_search`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "ApiKey SEdpeW1wb0J5bkFkTnVyZVp3TUs6bTFuUDRhdDNRTEdnbWtrSEV4a3QwUQ==", // garde ta clé
+        },
+      }
+    );
+
+    const hits = response.data.hits.hits;
+    const suggestions = response.data.suggest?.med_suggest?.[0]?.options ?? [];
+
+    // 🔹 On n'utilise les suggestions que s'il n'y a VRAIMENT aucun hit
+    const usingSuggestions = hits.length === 0 && suggestions.length > 0;
+    const rawResults = usingSuggestions ? suggestions : hits;
+
+    // 🔹 Pagination pour la page /search-result
+    if (page) {
       displayPagination(response.data.hits.total.value, query);
-  
-      return response.data.hits.hits.map((hit) => ({
-        Name: hit._source.Name,
-        Slug: hit._source.Slug,
-        Img: hit._source.Logo_for_finder_URL,
-        wordingLogo: hit._source.Wording_Logo,
-        filtres: hit._source.Filtres
-      }));
-    } catch (error) {
-      console.error(error);
     }
+
+    const results = rawResults.map((item) => {
+      const src = item._source ?? {};
+      return {
+        Name: src.Name,
+        Slug: src.Slug,
+        Img: src.Logo_for_finder_URL,
+        wordingLogo: src.Wording_Logo,
+        filtres: src.Filtres,
+      };
+    });
+
+    return { results, fromSuggest: usingSuggestions };
+  } catch (error) {
+    console.error(error);
+    return { results: [], fromSuggest: false };
+  }
 }
 
-async function displayAll(){
-    let resultList = document.querySelector(`div[data-w-tab="${activeTab}"] div.search-result-body`);
-    let results = await searchFilter(query, page, activeFilter);
-    if (results.length == 0) {
-      results = await suggest(query);
-      document.getElementById('suggestions').innerText = ''; // Voici quelques suggestions
+function displayResults(results, input) {
+  let resultList = document.getElementById("search-results");
+  let searchResultInner = "";
+
+  if (resultList) {
+    var searchResult = resultList.querySelector('#filter');
+    if(searchResult){
+      searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`);
+      searchResultInner.innerHTML = "";
     }
-    resultList.innerHTML = '';
-    results.forEach((result, index) => {
-        if (result.filtres.includes("only")){
-          let filter;
-          if (activeFilter == "") {
-            filter = "all";
-          }else {
-            filter = activeFilter.toString()                  
-                                  .normalize('NFD')   
-                                  .replace(/[\u0300-\u036f]/g, '')  
-                                  .toLowerCase() 
-                                  .trim() 
-                                  .replace(/[^a-z0-9\s-]/g, '')  
-                                  .replace(/\s+/g, '-') 
-                                  .replace(/-+/g, '-');
-          }
-          if (!result.filtres.includes(filter)) return;
-        }
-        const resultElement = document.createElement("a");
-    
-        const img = document.createElement("img");
-        img.style.minWidth = "16px";
-        img.style.height = "16px";
-        
-      // Adjust height for mobile devices
-        if (window.matchMedia("(max-width: 480px)").matches) {
-          img.style.minWidth = "20px";
-          img.style.height = "20px";  
-        }
-  
-        resultElement.classList.add("search-result");
-        const div =  document.createElement('div');
-    
-        // Check the gratos value and set the image source or make it invisible
-        img.setAttribute("src", result.Img);
-        div.style.cssText = "background-color: #0c0e160d; display: flex; align-items: center; padding: 4px; color: #0c0e16b3; font-size: 14px;border-radius:4px;";
-  
-       // Change background color to transparent on mobile
-        if (window.matchMedia("(max-width: 480px)").matches) {
-        div.style.backgroundColor = "transparent";
-        }
-      
-        if (window.matchMedia("(min-width: 480px)").matches){
-          div.appendChild(document.createTextNode(result.wordingLogo));
-          img.style.marginLeft = "5px";  // Add some space between the image and the text
-          div.style.padding = "2px 8px";
-        } 
-        div.appendChild(img);
-    
-        resultElement.style.cssText =
-           "text-decoration: none; color: #0c0e16; font-size: 16px; padding: 16px 8px; display: flex; align-items: center; justify-content:space-between";
-    
-        resultElement.addEventListener("click", function(event) {
-            event.preventDefault();
-            // handleSendClickResultToGA(input.id);
-            window.location.href = `${baseUrl}/pathologies/${result.Slug}`;
-        });
-    
-        //if (index === 0) resultElement.classList.add("autocomplete-active");
-        resultElement.href = `${baseUrl}/pathologies/${result.Slug}`;
-        resultElement.onmouseover = function () {
-            this.style.background = "rgb(240,243,255)";
-        };
-        resultElement.onmouseout = function () {
-            this.style.background = "none";
-        };
-    
-        // Append elements to the resultElement
-        resultElement.appendChild(document.createTextNode(result.Name));  // Add text node after img
-        resultElement.appendChild(div)
-  
-        resultList.appendChild(resultElement);
-    });
   }
 
-if (query != null){ 
-  //document.addEventListener("DOMContentLoaded", () => {
-  $(document).ready(function() {
-    document.querySelectorAll('#filter a').forEach((link) => {
-        if (link.innerText == activeFilter) {
-          activeTab = link.getAttribute('data-w-tab');
-          link.click();
+  if (!resultList) {
+    resultList = document.createElement("div");
+    resultList.id = "search-results";
+
+    const inputRect = input.getBoundingClientRect();
+
+    if (window.matchMedia("(min-width: 480px)").matches) {
+      resultList.style.cssText = "box-shadow: 0 0 0 1px rgb(35 38 59 / 10%), 0 6px 16px -4px rgb(35 38 59 / 15%); border-radius: 4px; padding: 8px; background: #fff;";
+      if (input.id === "search-bar-nav") {
+        resultList.style.width = `${inputRect.width * 2}px`;
+        resultList.style.left = `${inputRect.left}px`;
+      } else {
+        resultList.style.width = `${inputRect.width}px`;
+        resultList.style.left = `${inputRect.left}px`;
+      }
+    } else {
+      resultList.style.width = `calc(100% - 1rem)`;
+      resultList.style.marginLeft = '.5rem';
+      resultList.style.marginRight = '.5rem';
+    }
+    resultList.style.position = (input.id == "search-bar-main" || input.id == "search-bar-hp") ? "absolute" : "fixed";
+    resultList.style.top =
+      (input.id == "search-bar-main" || input.id == "search-bar-hp")
+        ? `${inputRect.bottom + window.pageYOffset + 5}px`
+        : `${inputRect.bottom + 5}px`;
+    resultList.style.zIndex = (input.id == "search-bar-main" || input.id == "search-bar-hp") ? "9999" : "10000";
+    resultList.style.background = "white";
+
+    let searchResultOriginal = searchBarMain ? document.querySelector('#search-result') : document.querySelector('#search-result-nav');
+    var searchResult = searchResultOriginal.cloneNode(true);
+    searchResult.id = "filter";
+    searchResult.style.display = "block";
+    if(!searchBarMain){
+        const scrollContainer = searchResult.querySelector('.search-result-tabs');
+        const scrollContent = searchResult.querySelector('.srt-menu');
+
+        scrollContent.addEventListener('mousemove', (e) => {
+            const containerWidth = scrollContainer.offsetWidth;
+            const contentWidth = scrollContent.scrollWidth;
+            const mouseX = e.clientX - scrollContainer.getBoundingClientRect().left;
+            const scrollPercentage = mouseX / containerWidth;
+            const scrollPosition = (contentWidth - containerWidth) * scrollPercentage;
+            scrollContent.style.transform = `translateX(${-scrollPosition}px)`;
+        });
+    }
+    searchResultInner = searchResult.querySelector(`div[data-w-tab="Tab 1"] div.search-result-body`)
+    searchResult.querySelectorAll('a').forEach((link, index) => {
+      if (activeFilter) {
+        if (index === 0) link.classList.remove('w--current');
+        if (activeFilter == transformString(link.innerText)) {
+            link.classList.add('w--current');
+            lastActiveTab = link.getAttribute('data-w-tab');
         }
-        link.addEventListener('click', (el) => {
-            activeTab = el.currentTarget.getAttribute('data-w-tab');
-            activeFilter = el.target.innerText != "Tous les résultats" ? el.target.innerText : "";
-            localStorage.setItem('filter', activeFilter);
-            page = 1;
-            displayAll();
-        })
+      }
+      link.addEventListener('click', (el) => {
+          el.preventDefault();
+          stringifiedFilter = transformString(el.target.innerText);
+          activeFilter = el.target.innerText != "Tous les résultats" ? stringifiedFilter : "";
+          setItemWithExpiration('filterTemp', activeFilter, 24);
+          document.querySelector('#filter a[data-w-tab="'+lastActiveTab+'"]').classList.remove('w--current');
+          el.currentTarget.classList.add('w--current')
+          lastActiveTab = el.currentTarget.getAttribute('data-w-tab');
+          clickEvent(activeFilter);
+      })
     })
-   displayAll();
+
+    resultList.appendChild(searchResult);
+    document.querySelector("body").appendChild(resultList);
+  }
+
+  let shown = 0;
+
+  results.forEach((result, index) => {
+    if (result.filtres.includes("only")){
+      let filter;
+      if (activeFilter == "") {
+        filter = "all";
+      } else {
+        filter = transformString(activeFilter);
+      }
+      if (!result.filtres.includes(filter)) return;
+    }
+    const resultElement = document.createElement("a");
+
+    const img = document.createElement("img");
+    img.style.minWidth = "20px";
+    img.style.height = "20px";
+
+    resultElement.classList.add("search-result");
+    const div =  document.createElement('div');
+
+    img.setAttribute("src", result.Img);
+    div.style.cssText = "display: flex; align-items: center; padding: 4px; color: #0c0e16; font-size: 14px;border-radius:4px;white-space: nowrap;";
+    div.style.backgroundColor = "transparent";
+
+    if (window.matchMedia("(min-width: 480px)").matches && input.id != "search-bar-nav"){
+      div.appendChild(document.createTextNode(result.wordingLogo));
+      img.style.marginLeft = "5px";
+      div.style.padding = "2px 8px";
+    }
+    div.appendChild(img);
+
+    resultElement.style.cssText =
+      "text-decoration: none; color: #0c0e16; padding: 8px 8px; display: flex; align-items: center; justify-content:space-between; font-size: 14px; border-radius: 4px;";
+
+    resultElement.addEventListener("click", function(event) {
+      event.preventDefault();
+      handleSendClickResultToGA(input.id);
+      window.location.href = `${baseUrl}/pathologies/${result.Slug}`;
+    });
+
+    resultElement.href = `${baseUrl}/pathologies/${result.Slug}`;
+    resultElement.onmouseover = function () { this.style.background = "rgb(240,243,255)"; };
+    resultElement.onmouseout  = function () { this.style.background = "none"; };
+
+    resultElement.appendChild(document.createTextNode(result.Name));
+    resultElement.appendChild(div);
+
+    searchResultInner.appendChild(resultElement);
+
+    shown++;
+    if (shown >= 10) return;
   });
 }
