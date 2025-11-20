@@ -1,5 +1,7 @@
 async function search(query, filter, page) {
   try {
+    const nameFuzziness =  query.length >= 5 ? 2 : query.length >= 4 ? "AUTO" : 0;                            
+    
     const response = await axios.post(
       `https://ordotype-finder.es.eu-west-3.aws.elastic-cloud.com/ordotype-index-2025-09-26/_search`,
       {
@@ -26,7 +28,7 @@ async function search(query, filter, page) {
                             Name: {
                               query: query,
                               operator: "AND",
-                              fuzziness: "2",
+                              fuzziness: nameFuzziness,
                               boost: 3,
                             },
                           },
@@ -37,7 +39,7 @@ async function search(query, filter, page) {
                               query: query,
                               operator: "OR", // au moins un mot-clé
                               fuzziness: "1",
-                              boost: 2,
+                              boost: 1.5,
                             },
                           },
                         },
