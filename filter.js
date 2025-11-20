@@ -26,7 +26,7 @@ async function search(query, filter, page) {
                             Name: {
                               query: query,
                               operator: "AND",
-                              fuzziness: "AUTO",
+                              fuzziness: "2",
                               boost: 3,
                             },
                           },
