@@ -106,16 +106,15 @@ async function search(query, filter, page) {
       }
     );
 
-    const hits = response.data.hits.hits;
+     const hits = response.data.hits.hits;
+   const suggestions = response.data.suggest?.med_suggest?.[0]?.options ?? [];
 
-    const results =
-      hits.length > 0
-        ? hits
-        : response.data.suggest?.med_suggest?.[0]?.options ?? [];
+    const usingSuggestions = hits.length === 0 && suggestions.length > 0;
+    const rawResults = usingSuggestions ? suggestions : hits;
 
     page && displayPagination(response.data.hits.total.value, query);
 
-    return results.map((item) => {
+    const results = rawResults.map((item) => {
       const src = item._source ?? {};
       return {
         Name: src.Name,
@@ -125,7 +124,10 @@ async function search(query, filter, page) {
         filtres: src.Filtres,
       };
     });
+
+    return { results, fromSuggest: usingSuggestions };
   } catch (error) {
     console.error(error);
+    return { results: [], fromSuggest: false };
   }
 }
