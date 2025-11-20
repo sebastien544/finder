@@ -36,7 +36,7 @@ async function search(query, filter, page) {
                             Alias: {
                               query: query,
                               operator: "OR", // au moins un mot-clé
-                              fuzziness: "AUTO",
+                              fuzziness: "1",
                               boost: 2,
                             },
                           },
