@@ -39,7 +39,7 @@ async function search(query, filter, page) {
                               query: query,
                               slop: 0,
                               max_expansions: 20,
-                              boost: 2,
+                              boost: 1.5,
                             },
                           },
                         },
@@ -49,7 +49,6 @@ async function search(query, filter, page) {
                               query: query,
                               operator: "OR", // au moins un mot-clé
                               fuzziness: nameFuzziness,
-                              boost: 1.5,
                             },
                           },
                         },
