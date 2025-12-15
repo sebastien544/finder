@@ -34,11 +34,11 @@ async function search(query, filter, page) {
                           },
                         },
                         {
-                          match: {
+                          match_phrase_prefix: {
                             Alias: {
                               query: query,
-                              operator: "OR", // au moins un mot-clé
-                              fuzziness: "1",
+                              slop: 0,
+                              max_expansions: 20,
                               boost: 1.5,
                             },
                           },
