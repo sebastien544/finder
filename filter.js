@@ -49,7 +49,7 @@ async function search(query, filter, page) {
                               query: query,
                               operator: "OR", // au moins un mot-clé
                               fuzziness: nameFuzziness,
-                              boost: 1,
+                              boost: 1.5,
                             },
                           },
                         },
